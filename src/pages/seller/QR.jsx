@@ -34,7 +34,7 @@ const QR = () => {
         {/*Kene tukar value online */}
         <QRCodeCanvas
           id="canvas"
-          value={`https://bazaarease-frontend.onrender.com/Menu/${user.id}`}
+          value={`https://bazaarease-frontend-server.onrender.com/Menu/${user.id}`}
           size={qrCodeSize}
           imageSettings={{
             height: 1000,
