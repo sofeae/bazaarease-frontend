@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import QRCode, { QRCodeCanvas } from "qrcode.react";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { frontendBaseURL } from "../../utils/imageUrl";
 
 function downloadStringAsFile(data, filename) {
   let a = document.createElement("a");
@@ -34,7 +35,7 @@ const QR = () => {
         {/*Kene tukar value online */}
         <QRCodeCanvas
           id="canvas"
-          value={`https://bazaarease-frontend-server.onrender.com/Menu/${user.id}`}
+          value={frontendBaseURL + `/Menu/${user.id}`}
           size={qrCodeSize}
           imageSettings={{
             height: 1000,

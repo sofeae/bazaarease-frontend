@@ -7,6 +7,7 @@ import style from "./Menu.module.css";
 // components
 import MenuDetails from "../../components/MenuDetails";
 import MenuForm from "../../components/MenuForm";
+import { backendBaseURL } from "../../utils/imageUrl";
 
 const Menu = () => {
   const { menus, dispatch } = useMenusContext();
@@ -14,12 +15,9 @@ const Menu = () => {
 
   useEffect(() => {
     const fetchMenus = async () => {
-      const response = await fetch(
-        "https://bazaarease-backend.onrender.com/api/menus",
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch(backendBaseURL + "/api/menus", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useMenusContext } from "../hooks/useMenusContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate, useParams } from "react-router-dom";
+import { backendBaseURL, imageURL } from "../utils/imageUrl";
 
 const EditForm = () => {
   const { id } = useParams();
@@ -24,18 +25,15 @@ const EditForm = () => {
   //Load Intial Data
   useEffect(() => {
     async function loadData() {
-      const response = await fetch(
-        `https://bazaarease-backend.onrender.com/api/menus/${id}`,
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch(backendBaseURL + `/api/menus/${id}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
       // setMenu(json);
       setName(json.name);
       setDesc(json.desc);
       setPrice(json.price);
-      setCurrentImage(`http://localhost:4000/${json.image}`);
+      setCurrentImage(imageURL + `/${json.image}`);
     }
 
     loadData();
@@ -62,16 +60,13 @@ const EditForm = () => {
       formData.append("image", image);
     }
 
-    const response = await fetch(
-      `https://bazaarease-backend.onrender.com/api/menus/${id}`,
-      {
-        method: "PATCH",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch(backendBaseURL + `/menus/${id}`, {
+      method: "PATCH",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
     const json = await response.json();
     if (!response.ok) {

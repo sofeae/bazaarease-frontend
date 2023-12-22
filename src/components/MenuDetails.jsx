@@ -9,6 +9,7 @@ import style from "./MenuDetails.module.css";
 
 // date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { backendBaseURL, imageURL } from "../utils/imageUrl";
 
 const MenuDetails = ({ menu }) => {
   const { dispatch } = useMenusContext();
@@ -20,15 +21,12 @@ const MenuDetails = ({ menu }) => {
       return;
     }
 
-    const response = await fetch(
-      "https://bazaarease-backend.onrender.com/api/menus/" + menu._id,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch(backendBaseURL + "/api/menus/" + menu._id, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     const json = await response.json();
 
     if (response.ok) {
@@ -42,15 +40,12 @@ const MenuDetails = ({ menu }) => {
       return;
     }
 
-    const response = await fetch(
-      "https://bazaarease-backend.onrender.com/api/menus/" + menu._id,
-      {
-        method: "UPDATE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch(backendBaseURL + "/api/menus/" + menu._id, {
+      method: "UPDATE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     const json = await response.json();
 
     if (response.ok) {
@@ -83,7 +78,7 @@ const MenuDetails = ({ menu }) => {
       </div>
 
       <img
-        src={"http://localhost:4000/" + menu.image}
+        src={imageURL + "/" + menu.image}
         height="250px"
         width="250px"
         alt="Menu"

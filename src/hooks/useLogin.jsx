@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { backendBaseURL } from "../utils/imageUrl";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -11,14 +12,11 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(
-      "https://bazaarease-backend.onrender.com/api/user/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, businessName }),
-      }
-    );
+    const response = await fetch(backendBaseURL + "/api/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, businessName }),
+    });
     const json = await response.json();
 
     if (!response.ok) {

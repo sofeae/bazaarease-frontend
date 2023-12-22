@@ -4,6 +4,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 
 // components
 import CustMenuList from "../../components/CustMenuList";
+import { backendBaseURL } from "../../utils/imageUrl";
 // import Sidebar from '../components/SidebarA';
 // import Navbar from '../components/Navbar';
 
@@ -13,12 +14,9 @@ const Menu = () => {
 
   useEffect(() => {
     const fetchMenus = async () => {
-      const response = await fetch(
-        "https://bazaarease-backend.onrender.com/api/menus",
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch(backendBaseURL + "/api/menus", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {

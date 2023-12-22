@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import { ProductPreviewCard } from "./ProductPreviewCard.jsx";
+import { backendBaseURL } from "../../utils/imageUrl.js";
 
 export default function CustomerPage() {
   const { userId } = useParams();
@@ -28,9 +29,7 @@ export default function CustomerPage() {
   };
 
   async function loadData() {
-    const response = await fetch(
-      `https://bazaarease-backend.onrender.com/api/customer/${userId}`
-    );
+    const response = await fetch(backendBaseURL + `/api/customer/${userId}`);
     const json = await response.json();
     setMenus(json);
     console.log(json);

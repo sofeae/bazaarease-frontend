@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMenusContext } from "../hooks/useMenusContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { backendBaseURL } from "../utils/imageUrl";
 
 const MenuForm = () => {
   const { dispatch } = useMenusContext();
@@ -30,16 +31,13 @@ const MenuForm = () => {
     //formData.append("stock", stock);
     formData.append("image", image);
 
-    const response = await fetch(
-      "https://bazaarease-backend.onrender.com/api/menus",
-      {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch(backendBaseURL + "/api/menus", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
     const json = await response.json();
     if (!response.ok) {
