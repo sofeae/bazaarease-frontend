@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useMenusContext } from "../hooks/useMenusContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useMenusContext } from "../../hooks/useMenusContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 //css
 import style from "./Menu.module.css";
 // components
-import MenuDetails from "../components/MenuDetails";
-import MenuForm from "../components/MenuForm";
+import MenuDetails from "../../components/MenuDetails";
+import MenuForm from "../../components/MenuForm";
 
 const Menu = () => {
   const { menus, dispatch } = useMenusContext();

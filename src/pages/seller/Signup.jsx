@@ -1,32 +1,21 @@
-import { useEffect, useState } from "react";
-import { useLogin } from "../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useState } from "react";
+import { useSignup } from "../../hooks/useSignup";
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [businessName, setBusinessName] = useState("");
-  const { login, error, isLoading } = useLogin();
-  const nav = useNavigate();
-  const { user } = useAuthContext();
+  const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await login(email, password, businessName);
+    await signup(email, password, businessName);
   };
 
-  useEffect(() => {
-    if (user) {
-      console.log("Redirected user to menu page");
-      nav("/seller");
-    }
-  });
-
   return (
-    <form className="login" onSubmit={handleSubmit}>
-      <h3>Log In</h3>
+    <form className="signup" onSubmit={handleSubmit}>
+      <h3>Sign Up</h3>
 
       <label>Email address:</label>
       <input
@@ -46,11 +35,10 @@ const Login = () => {
         onChange={(e) => setBusinessName(e.target.value)}
         value={businessName}
       />
-
-      <button disabled={isLoading}>Log in</button>
+      <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
     </form>
   );
 };
 
-export default Login;
+export default Signup;

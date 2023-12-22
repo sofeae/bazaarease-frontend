@@ -1,8 +1,8 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../../components/Sidebar";
 import { Box } from "@mui/material";
 //import Header from "../components/Header"
-import CustMenuList from "../components/CustMenuList";
+import CustMenuList from "../../components/CustMenuList";
 
 function Order() {
   return (

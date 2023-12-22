@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
 //JSX
-import Menu from "../pages/Menu";
+import Menu from "../pages/seller/Menu";
 import EditForm from "../components/EditForm";
 import HomeLayout from "../layouts/HomeLayout";
-import QR from "../pages/QR";
-import Order from "../pages/Order";
+import QR from "../pages/seller/QR";
+import Order from "../pages/seller/Order";
 
 export default function SellerRoutes() {
   return (

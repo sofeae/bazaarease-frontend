@@ -20,7 +20,7 @@
 //         return (
 //             <div className="bg-white h-full text-black flex justify-center p-4">
 //                 <h1>Your Cart is empty ergh
-                    
+
 //                 </h1>
 //             </div>
 //         )
@@ -43,7 +43,7 @@
 //                 <StripeWrapper />
 //             </div> */}
 //             <ProductPreviewCard />
-            
+
 //         </div>
 //     )
 // }

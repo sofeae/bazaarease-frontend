@@ -1,8 +1,8 @@
 // QRCodePage.js
 import React from "react";
 import QRCode from "qrcode.react";
-import { useAuthContext } from "../hooks/useAuthContext";
-import Sidebar from "../components/Sidebar";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import Sidebar from "../../components/Sidebar";
 
 const QR = () => {
   const { user } = useAuthContext();

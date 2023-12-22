@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 //JSX
-import Login from "./pages/Login";
+import Login from "./pages/seller/Login";
 import RootLayout from "./layouts/RootLayout";
 import ErrorPage from "./error-page";
 import SellerRoutes from "./routes/SellerRoutes";
 import RequireAuth from "./components/RequireAuth";
-import CustomerRoutes from "./routes/CustomerRoutes";
+import CustomerPage from "./pages/customer/CustomerPage";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
         <Routes>
           <Route path="*" element={<ErrorPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/Menu/:userId" element={<CustomerPage />} />
           <Route element={<RootLayout />}>
             <Route path="/login" element={<Login />} />
             <Route
@@ -25,7 +26,6 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route path="/customer/*" element={<CustomerRoutes />} />
           </Route>
         </Routes>
       </BrowserRouter>
