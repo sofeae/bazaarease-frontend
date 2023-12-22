@@ -14,9 +14,12 @@ const Menu = () => {
 
   useEffect(() => {
     const fetchMenus = async () => {
-      const response = await fetch("/api/menus", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        "https://bazaarease-backend.onrender.com/api/menus",
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
 
       if (response.ok) {

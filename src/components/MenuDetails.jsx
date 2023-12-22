@@ -20,12 +20,15 @@ const MenuDetails = ({ menu }) => {
       return;
     }
 
-    const response = await fetch("/api/menus/" + menu._id, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://bazaarease-backend.onrender.com/api/menus/" + menu._id,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
 
     if (response.ok) {
@@ -39,12 +42,15 @@ const MenuDetails = ({ menu }) => {
       return;
     }
 
-    const response = await fetch("/api/menus/" + menu._id, {
-      method: "UPDATE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://bazaarease-backend.onrender.com/api/menus/" + menu._id,
+      {
+        method: "UPDATE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
 
     if (response.ok) {

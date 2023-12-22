@@ -6,7 +6,9 @@ export default function CustomerPage() {
   const [menus, setMenus] = useState([]);
 
   async function loadData() {
-    const response = await fetch(`/api/customer/${userId}`);
+    const response = await fetch(
+      `https://bazaarease-backend.onrender.com/api/customer/${userId}`
+    );
     const json = await response.json();
     setMenus(json);
     console.log(json);

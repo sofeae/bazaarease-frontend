@@ -59,13 +59,16 @@ const EditForm = () => {
       formData.append("image", image);
     }
 
-    const response = await fetch(`/api/menus/${id}`, {
-      method: "PATCH",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://bazaarease-backend.onrender.com/api/menus/${id}`,
+      {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
     if (!response.ok) {

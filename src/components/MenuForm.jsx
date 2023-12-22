@@ -30,13 +30,16 @@ const MenuForm = () => {
     //formData.append("stock", stock);
     formData.append("image", image);
 
-    const response = await fetch("/api/menus", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://bazaarease-backend.onrender.com/api/menus",
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
     if (!response.ok) {
