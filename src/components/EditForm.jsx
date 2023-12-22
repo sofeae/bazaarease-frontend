@@ -24,9 +24,12 @@ const EditForm = () => {
   //Load Intial Data
   useEffect(() => {
     async function loadData() {
-      const response = await fetch(`/api/menus/${id}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        `https://bazaarease-backend.onrender.com/api/menus/${id}`,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
       // setMenu(json);
       setName(json.name);
