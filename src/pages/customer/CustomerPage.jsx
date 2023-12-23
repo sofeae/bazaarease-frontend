@@ -42,6 +42,7 @@ export default function CustomerPage() {
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-white bg-white">
+      <h1>Test</h1>
       <Carousel responsive={responsive}>
         {menus.length > 0 &&
           menus.map((product, index) => {
