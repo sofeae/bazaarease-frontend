@@ -20,7 +20,7 @@ export default function PermanentDrawerLeft() {
     { text: "Sales Management", icon: <AttachMoneyIcon />, link: "Order" },
     { text: "editForm", icon: <AttachMoneyIcon />, link: "EditForm" },
     { text: "test test", icon: <AttachMoneyIcon />, link: "Test" },
-    { text: "customer side", icon: <AttachMoneyIcon />, link: "Customer" },
+    { text: "customer side", icon: <AttachMoneyIcon />, link: "/customer/CustomerPage" },
   ];
   const drawerWidth = 240;
 
