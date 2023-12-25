@@ -6,7 +6,7 @@ import RootLayout from "./layouts/RootLayout";
 import ErrorPage from "./error-page";
 import SellerRoutes from "./routes/SellerRoutes";
 import RequireAuth from "./components/RequireAuth";
-import CustomerPage from "./pages/customer/CustomerPage";
+import CustomerRoutes from "./routes/CustomerRoutes";
 
 function App() {
   return (
@@ -15,7 +15,8 @@ function App() {
         <Routes>
           <Route path="*" element={<ErrorPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/Menu/:userId" element={<CustomerPage />} />
+          <Route path="/Menu/:userId/*" element={<CustomerRoutes />} />
+
           <Route element={<RootLayout />}>
             <Route path="/login" element={<Login />} />
             <Route

@@ -11,8 +11,10 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { Drawer } from "@mui/material";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function PermanentDrawerLeft() {
+  const {user} = useAuthContext();
   const items = [
     { text: "Menu", icon: <RestaurantIcon />, link: "/seller" },
     { text: "Order", icon: <BorderColorIcon />, link: "/seller/Order" },
@@ -20,7 +22,7 @@ export default function PermanentDrawerLeft() {
     { text: "Sales Management", icon: <AttachMoneyIcon />, link: "Order" },
     { text: "editForm", icon: <AttachMoneyIcon />, link: "EditForm" },
     { text: "test test", icon: <AttachMoneyIcon />, link: "Test" },
-    { text: "customer side", icon: <AttachMoneyIcon />, link: "/customer/CustomerPage" },
+    { text: "customer side", icon: <AttachMoneyIcon />, link: `/menu/${user.id}/CustomerPage` },
   ];
   const drawerWidth = 240;
 
