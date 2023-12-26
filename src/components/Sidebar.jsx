@@ -19,7 +19,7 @@ export default function PermanentDrawerLeft() {
     { text: "Menu", icon: <RestaurantIcon />, link: "/seller" },
     { text: "Order", icon: <BorderColorIcon />, link: "/seller/Order" },
     { text: "QR Code", icon: <QrCodeIcon />, link: "/seller/QR" },
-    { text: "Sales Management", icon: <AttachMoneyIcon />, link: "Order" },
+    { text: "Sales Management", icon: <AttachMoneyIcon />, link: "/seller/Order" },
     { text: "editForm", icon: <AttachMoneyIcon />, link: "EditForm" },
     { text: "test test", icon: <AttachMoneyIcon />, link: "Test" },
     { text: "customer side", icon: <AttachMoneyIcon />, link: `/menu/${user.id}/CustomerPage` },

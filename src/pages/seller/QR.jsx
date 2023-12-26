@@ -1,4 +1,5 @@
 // QRCodePage.js
+import Button from "../../components/elements/Button";
 import React, { useRef } from "react";
 import QRCode, { QRCodeCanvas } from "qrcode.react";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -16,7 +17,7 @@ const QR = () => {
   const canvasRef = useRef(null);
 
   console.log(user);
-  const qrCodeSize = 500; // Adjust the size as needed
+  const qrCodeSize = 250; // Adjust the size as needed
 
   function onCanvasButtonClick() {
     const node = document.getElementById("canvas");
@@ -29,21 +30,21 @@ const QR = () => {
   }
 
   return (
-    <div>
-      <h1>{user.email}</h1>
-      <div>
-        {/*Kene tukar value online */}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+      <h1>{user.businessName}</h1>
+      <div style={{ textAlign: "center", margin: "20px", border: "2px solid #000", padding: "10px" }}>
         <QRCodeCanvas
           id="canvas"
           value={frontendBaseURL + `/Menu/${user.id}/CustomerPage`}
           size={qrCodeSize}
-          imageSettings={{
-            height: 1000,
-            width: 1000,
-          }}
+        // imageSettings={{
+        //   height: 1000,
+        //   width: 1000,
+        // }}
         />
       </div>
-      <button onClick={onCanvasButtonClick}>Download QR Code</button>
+      <Button className="text-yellow-400 hover:text-yellow-500 bg-gray-800 font-bold text-decoration-line px-3"
+        onClick={onCanvasButtonClick}>Download QR Code</Button>
     </div>
   );
 };
