@@ -1,0 +1,13 @@
+/* Add this to your styles or use a CSS module */
+.carousel-container {
+    height: 400px; /* Set a fixed height for the carousel container */
+  }
+  
+  .carousel-item {
+    height: 100%; /* Set the height of individual items */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Additional styling for individual items */
+  }
+  

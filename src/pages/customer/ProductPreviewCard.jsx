@@ -2,6 +2,7 @@ import { imageURL } from "../../utils/imageUrl";
 import { AddProduct } from "./AddProduct";
 
 export const ProductPreviewCard = ({ product, onAddProduct }) => {
+  
   const addProduct = () => {
     onAddProduct(product);
   };

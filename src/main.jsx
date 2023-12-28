@@ -5,6 +5,8 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 import { MenusContextProvider } from "./context/MenusContext.jsx";
 import App from "./App.jsx";
 import { ThemeProvider, createTheme } from "@mui/material";
+import { Provider } from "react-redux";
+import store from "././stores/rootStore.js";
 
 const theme = createTheme({
   typography: {
@@ -28,9 +30,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
       <MenusContextProvider>
+      <Provider store={store}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
+      </Provider>
       </MenusContextProvider>
     </AuthContextProvider>
   </React.StrictMode>

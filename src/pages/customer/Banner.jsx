@@ -1,5 +1,5 @@
 // import Button from "./elements/Button";
-import bazaar3 from "../../assets/images/bazaar3.png";
+import platter from "../../assets/images/platter.png";
 
 export const Banner = () => {
     return (
@@ -22,7 +22,7 @@ export const Banner = () => {
                 {/* </div> */}
             </div>
             <div className="banner-image w-full md:w-1/2 p-3 flex justify-end">
-                <img src={bazaar3} alt="banner" className="max-h-48" />
+                <img src={platter} alt="banner" className="max-h-48" />
             </div>
         </div>
         </div>

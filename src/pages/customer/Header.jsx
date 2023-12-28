@@ -18,12 +18,12 @@ export const Header = ({ cartCount }) => {
 
                 <div className="nav-menu-wrapper flex items-center justify-between space-x-10">
                     {/* <Link to="/" className="text-xl">Home</Link> */}
-                    <h1>BAZAAREASE</h1>
+                    <h1>BazaarEase</h1>
                     {/* <Link to="#about" className="text-xl">About</Link> */}
                 </div>
                 
                 <div className="flex items-center justify-center space-x-4">
-                    <Link to="/cart" className="mr-4 relative">
+                    <Link to="/CartPage" className="mr-4 relative">
                         <img src={cartIcon} alt="cart"/>
                         {cartCount > 0 ? <div className="rounded-full bg-yellow-400 text-white inline-flex justify-center items-center w-full absolute -top-1 -right-1">{cartCount}</div> : null}
                     </Link>

@@ -60,7 +60,7 @@ const EditForm = () => {
       formData.append("image", image);
     }
 
-    const response = await fetch(backendBaseURL + `/menus/${id}`, {
+    const response = await fetch(backendBaseURL + `/api/menus/${id}`, {
       method: "PATCH",
       body: formData,
       headers: {
