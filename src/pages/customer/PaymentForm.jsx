@@ -33,20 +33,31 @@ const PaymentForm = () => {
 
         setLoading(true);
         try {
-            const { queueNum, order } = await fetch(backendBaseURL + `/api/customer/${userId}`, {
+
+            const card = 1123103103123 ; //DUMMY DATA
+            const response = await fetch(backendBaseURL + `/api/order`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({  //Data to send = cart, sellerId
                     cart:cart,
-                    sellerId: userId
+                    sellerId: userId,
+                    card: card,
                 })
-            }).then(r => r.json());
+            })
 
-            dispatch(clearAddress());
-            dispatch(clearCart());
-            navigate('./PaymentSuccessPage');
+            const { queueNum, paymentStatus } = await response.json()
+            console.log(queueNum,paymentStatus)
+            if(paymentStatus == "paid"){
+                // dispatch(clearAddress());
+                dispatch(clearCart());
+                navigate('payment-success',{state: {queueNum: queueNum}});
+            }
+
+            console.log("Tak Jadi")
+            
+
 
         } catch (err) {
             console.log(err);

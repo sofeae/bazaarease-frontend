@@ -12,7 +12,7 @@ export default function CustomerRoutes() {
       <Route element={<CustomerLayout />}> {/*Wrap Layout- Elok tukar jadi customerLayout */}
         <Route path="CustomerPage" element={<CustomerPage />} />
         <Route path="Cart" element={<CartPage />}/>
-        <Route path="payment-success" element={<PaymentSuccessPage />}/>
+        <Route path="Cart/payment-success" element={<PaymentSuccessPage />}/>
       </Route>
     </Routes> 
   );
