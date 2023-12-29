@@ -5,8 +5,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 //css
 import style from "./Menu.module.css";
 // components
-import MenuDetails from "../../components/MenuDetails";
-import MenuForm from "../../components/MenuForm";
+import OrderDetails from "../../components/OrderDetails";
 import { backendBaseURL } from "../../utils/imageUrl";
 
 const Menu = () => {
@@ -31,15 +30,18 @@ const Menu = () => {
   }, [dispatch, user]);
 
   return (
-    <>
+    <div className="flex items-center justify-center h-full">
       <div className={style["menu-container"]}>
-        <div className="flex flex-col w-2/5 gap-4 ">
+        <div className="flex flex-wrap w-full gap-4">
           {menus &&
-            menus.map((menu) => <MenuDetails key={menu._id} menu={menu} />)}
+            menus.map((menu) => (
+              <div key={menu._id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 mx-auto">
+                  <OrderDetails menu={menu} />
+              </div>
+            ))}
         </div>
-        {/* <MenuForm /> */}
       </div>
-    </>
+    </div>
   );
 };
 

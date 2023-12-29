@@ -3,14 +3,15 @@ import { useParams } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import { ProductPreviewCard } from "./ProductPreviewCard.jsx";
 import { backendBaseURL } from "../../utils/imageUrl.js";
-import { addToCart } from "../../stores/cart/cartSlice";
-import { useDispatch } from "react-redux";
+import { addToCart,cartProducts } from "../../stores/cart/cartSlice";
+import { useDispatch,useSelector } from "react-redux";
 import 'react-multi-carousel/lib/styles.css';
 
 export default function ProductsPreview() {
   const { userId } = useParams();
   const [menus, setMenus] = useState([]);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //Edit Cart
+  const cart = useSelector(cartProducts)
 
   const responsive = {
     superLargeDesktop: {
@@ -44,18 +45,26 @@ export default function ProductsPreview() {
     loadData();
   }, [])
 
-  const onAddProduct = (menu) => {
-    dispatch(addToCart(menu))
+  const onAddProduct = (product) => {
+    dispatch(addToCart(product))
+    console.log(product)
+    console.log(cart)
   }
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-black bg-white">
       <h1>Test</h1>
       <Carousel responsive={responsive} >
+        {/* <div>TEMPORARY CART
+      {cart.map((product)=>{
+        return <div>{product.name}</div>
+      })}
+
+        </div> */}
         {menus.length > 0 &&
           menus.map((product, index) => {
             return (
-              <div className="w-full p-3">
+              <div key={index} className="w-full px-2 h-full">
                 <ProductPreviewCard key={index} product={product} onAddProduct={onAddProduct} />
               </div>
             );

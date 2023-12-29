@@ -6,7 +6,7 @@ import useTabSwitch from "./useTabSwitch";
 // import { ReactComponent as ArrowRightSvg } from "../../assets/icons/arrow-right-long-svgrepo-com.svg";
 // import { AddressForm } from "../../components/AddressForm";
 import { ProductsSummary } from "./ProductsSummary";
-// import { StripeWrapper } from "./PaymentForm";
+import { PaymentWrapper } from "./PaymentForm.jsx";
 
 const CartPage = () => {
     const cart = useSelector(cartProducts);
@@ -27,15 +27,18 @@ const CartPage = () => {
             <div className={`tabs ${currentTab !== 'Summary' ? 'hidden' : ''}`}>
                 <ProductsSummary />
                 <div className="flex justify-end p-2">
-                    <Button variant="dark" className="flex items-center" onClick={()=>handleTabSwitch('Payment')}><span className="mr-1">Next</span><ArrowRightSvg /></Button>
+                    <Button variant="dark" className="flex items-center" onClick={()=>handleTabSwitch('Payment')}><span className="mr-1">Next</span>
+                    {/* <ArrowRightSvg /> */}
+                    </Button>
                 </div>
             </div>
             {/* <div className={`tabs ${currentTab !== 'Delivery' ? 'hidden' : ''}`}>
                 <AddressForm onTabSwitch={handleTabSwitch}/>
             </div> */}
-            {/* <div className={`tabs ${currentTab !== 'Payment' ? 'hidden' : ''}`}>
-                <StripeWrapper />
-            </div> */}
+            <div className={`tabs ${currentTab !== 'Payment' ? 'hidden' : ''}`}>
+                <h1>meaw</h1>
+                <PaymentWrapper />
+            </div>
         </div>
     )
 }

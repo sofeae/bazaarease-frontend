@@ -1,38 +1,20 @@
 import { useMenusContext } from "../hooks/useMenusContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import CheckIcon from '@mui/icons-material/Check';
+import ToggleButton from '@mui/material/ToggleButton';
+import * as React from 'react';
 
 //css
-import style from "./MenuDetails.module.css";
+import style from "./OrderDetails.module.css";
 
 // date fns
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { backendBaseURL, imageURL } from "../utils/imageUrl";
 
-const MenuDetails = ({ menu }) => {
+const OrderDetails = ({ menu }) => {
   const { dispatch } = useMenusContext();
   const { user } = useAuthContext();
-
-  // handle delete
-  const handleDelete = async () => {
-    if (!user) {
-      return;
-    }
-
-    const response = await fetch(backendBaseURL + "/api/menus/" + menu._id, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "DELETE_MENUS", payload: json });
-    }
-  };
 
   //handle edit
   const handleEdit = async () => {
@@ -59,8 +41,10 @@ const MenuDetails = ({ menu }) => {
     color: "black",
   };
 
+  const [selected, setSelected] = React.useState(false);
+
   return (
-    <div className="flex flex-col bg-white p-3 w-full justify-center shadow-xl">
+    <div className="flex flex-col bg-yellow p-3 w-full justify-center shadow-xl">
       <div className="flex justify-between">
         <h4 className="text-primary-color">
           {/* {menu._id}  */}
@@ -69,11 +53,18 @@ const MenuDetails = ({ menu }) => {
         <span>
           {/* Edit icon */}
           {/* <EditIcon style={iconStyle} onClick={handleEdit} /> */}
-          <Link to={`EditForm/${menu._id}`}>
+          {/* <Link to={`EditForm/${menu._id}`}>
             <EditIcon style={iconStyle} />
-          </Link>
-          {/* Delete icon */}
-          <DeleteIcon style={iconStyle} onClick={handleDelete} />
+          </Link> */}
+          <ToggleButton
+            value="check"
+            selected={selected}
+            onChange={() => {
+              setSelected(!selected);
+            }}
+          >
+            <CheckIcon />
+          </ToggleButton>
         </span>
       </div>
 
@@ -85,8 +76,8 @@ const MenuDetails = ({ menu }) => {
         className={style.img + " object-cover mx-auto"}
       />
       <p>
-        <strong>Description: </strong>
-        {menu.desc}
+        <strong>Quantity: </strong>
+        {/* {menu.desc} */}
       </p>
       <p>
         <strong>Price: </strong>
@@ -99,13 +90,12 @@ const MenuDetails = ({ menu }) => {
       {/* <p>
         <strong>Image: </strong>
       </p> */}
-
-      <p>
+      {/* <p>
         <strong>Added: </strong>
         {formatDistanceToNow(new Date(menu.createdAt), { addSuffix: true })}
-      </p>
+      </p> */}
     </div>
   );
 };
 
-export default MenuDetails;
+export default OrderDetails;

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import {incrementProductAmount, decrementProductAmount } from "../../stores/cart/cartSlice";
+import { incrementProductAmount, decrementProductAmount } from "../../stores/cart/cartSlice";
+import { imageURL } from "../../utils/imageUrl";
 
 export const ProductsSummaryCard = ({ product }) => {
     const dispatch = useDispatch();
@@ -7,11 +8,14 @@ export const ProductsSummaryCard = ({ product }) => {
     return (
         <div className="flex p-1 sm:p-2 border-b border-b-gray-200">
             <div className="product-image mr-2 border border-grey-200 rounded-lg w-full sm:w-1/3">
-                <img src={product.imageUrl} alt={product.name} />
+                <img
+                    src={`${imageURL}/${product.image}`}
+                    alt={product.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div className="product-info">
                 <h3>{product.name}</h3>
-                <p className="text-gray-600">{product.desciption}</p>
+                <p className="text-gray-600">{product.desc}</p>
             </div>
             <div className="product-price-qt flex flex-col items-center justify-center">
                 <div className="price">{`${product.price}$`}</div>
