@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import { MenusContextProvider } from "./context/MenusContext.jsx";
+import { OrdersContextProvider } from "./context/OrdersContext.jsx";
 import App from "./App.jsx";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { Provider } from "react-redux";
@@ -30,11 +31,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
       <MenusContextProvider>
+        <OrdersContextProvider>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
       </Provider>
+      </OrdersContextProvider>
       </MenusContextProvider>
     </AuthContextProvider>
   </React.StrictMode>

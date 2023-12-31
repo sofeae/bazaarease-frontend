@@ -46,7 +46,7 @@ const PaymentForm = () => {
                     card: card,
                 })
             })
-
+ 
             const { queueNum, paymentStatus } = await response.json()
             console.log(queueNum,paymentStatus)
             if(paymentStatus == "paid"){

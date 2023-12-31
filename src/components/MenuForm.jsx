@@ -60,52 +60,44 @@ const MenuForm = () => {
   return (
     <div className="sticky top-24">
       <form className="create " onSubmit={handleSubmit}>
-        <h3>Add a New Menu</h3>
-
-        <label>Menu Name:</label>
+      <h3 className="mb-4 text-2xl font-bold">Add New Product</h3>
+  
+        <label className="mb-2">Menu Name:</label>
         <input
           type="text"
           onChange={(e) => setName(e.target.value)}
           value={name}
-          className={emptyFields.includes("title") ? "error" : ""}
+          className={`mb-2 p-2 w-full ${emptyFields.includes("title") ? "error" : ""}`}
         />
-
-        <label>Description:</label>
+  
+        <label className="mb-2">Description:</label>
         <input
           type="text"
           onChange={(e) => setDesc(e.target.value)}
           value={desc}
-          className={emptyFields.includes("desc") ? "error" : ""}
+          className={`mb-2 p-2 w-full ${emptyFields.includes("desc") ? "error" : ""}`}
         />
-
-        <label>Price:</label>
+  
+        <label className="mb-2">Price:</label>
         <input
           type="number"
           onChange={(e) => setPrice(e.target.value)}
           value={price}
-          className={emptyFields.includes("price") ? "error" : ""}
+          className={`mb-2 p-2 w-full ${emptyFields.includes("price") ? "error" : ""}`}
         />
-
-        {/* <label>Stock:</label>
-      <input
-        type="number"
-        onChange={(e) => setStock(e.target.value)}
-        value={stock}
-        className={emptyFields.includes('stock') ? 'error' : ''}
-      /> */}
-
-        <label>Image:</label>
+  
+        <label className="mb-2">Image:</label>
         <input
           type="file"
           onChange={onImageChange}
-          className={emptyFields.includes("image") ? "error" : ""}
+          className={`mb-2 p-2 w-full ${emptyFields.includes("image") ? "error" : ""}`}
         />
-
-        <button>Add Menu</button>
-        {error && <div className="error">{error}</div>}
+  
+        <button className="bg-yellow-500 text-white px-4 py-2 rounded mt-6">Add Product</button>
+        {error && <div className="error mt-2">{error}</div>}
       </form>
     </div>
-  );
+  );  
 };
 
 export default MenuForm;

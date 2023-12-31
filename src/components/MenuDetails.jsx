@@ -62,7 +62,7 @@ const MenuDetails = ({ menu }) => {
   return (
     <div className="flex flex-col bg-white p-3 w-full justify-center shadow-xl">
       <div className="flex justify-between">
-        <h4 className="text-primary-color">
+        <h4 className="text-yellow-500 font-bold text-xl">
           {/* {menu._id}  */}
           {menu.name}
         </h4>

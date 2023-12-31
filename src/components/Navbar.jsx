@@ -24,7 +24,7 @@ const Navbar = () => {
           </Link>
         </div> */}
         <Link to="/seller">
-          <h1>BazaarEase</h1>
+        <h1 className="text-3xl font-bold">BazaarEase</h1>
         </Link>
         <nav className={styles.nav}>
           {user && (

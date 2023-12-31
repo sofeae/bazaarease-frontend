@@ -7,6 +7,7 @@ import ErrorPage from "./error-page";
 import SellerRoutes from "./routes/SellerRoutes";
 import RequireAuth from "./components/RequireAuth";
 import CustomerRoutes from "./routes/CustomerRoutes";
+import Signup from "./pages/seller/Signup"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 
           <Route element={<RootLayout />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup/>}/>
             <Route
               path="/seller/*"
               element={

@@ -1,39 +1,72 @@
 import { useMenusContext } from "../hooks/useMenusContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useOrdersContext } from "../hooks/useOrdersContext";
 // import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
 import * as React from 'react';
 
-//css
-import style from "./OrderDetails.module.css";
+//dialog
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
 // date fns
 import { backendBaseURL, imageURL } from "../utils/imageUrl";
 
-const OrderDetails = ({ menu }) => {
-  const { dispatch } = useMenusContext();
-  const { user } = useAuthContext();
+//dialog
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+const OrderDetails = ({ orders }) => {
+  const { dispatch } = useOrdersContext();
+  const [selected, setSelected] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // if (!orders) {
+  //   return <p>Loading...</p>; // or any loading indicator
+  // }
+
+  // const { user } = useAuthContext();
 
   //handle edit
-  const handleEdit = async () => {
-    if (!user) {
-      return;
-    }
+  // const handleEdit = async () => {
+  //   if (!user) {
+  //     return;
+  //   }
 
-    const response = await fetch(backendBaseURL + "/api/menus/" + menu._id, {
-      method: "UPDATE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
+  //   const response = await fetch(backendBaseURL + "/api/menus/" + menu._id, {
+  //     method: "UPDATE",
+  //     headers: {
+  //       Authorization: `Bearer ${user.token}`,
+  //     },
+  //   });
+  //   const json = await response.json();
 
-    if (response.ok) {
-      dispatch({ type: "UPDATE_MENUS", payload: json });
-    }
-  };
+  //   if (response.ok) {
+  //     dispatch({ type: "UPDATE_MENUS", payload: json });
+  //   }
+  // };
 
   const iconStyle = {
     marginRight: "8px", // Adjust the spacing between the icon and text
@@ -41,15 +74,55 @@ const OrderDetails = ({ menu }) => {
     color: "black",
   };
 
-  const [selected, setSelected] = React.useState(false);
-
   return (
     <div className="flex flex-col bg-yellow p-3 w-full justify-center shadow-xl">
       <div className="flex justify-between">
-        <h4 className="text-primary-color">
-          {/* {menu._id}  */}
-          {menu.name}
-        </h4>
+        <React.Fragment>
+          <h4 className="text-yellow-500 font-bold text-xl" onClick={handleClickOpen}>
+            {orders.queueNum}
+          </h4>
+          <BootstrapDialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              Order Details
+            </DialogTitle>
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                {orders.cart.map((item, index) => (
+                  <span key={index}>
+                    <p><strong>Name: </strong>
+                      {item.name}
+                    </p>
+                    <p><strong>Description: </strong>
+                      {item.desc}
+                    </p>
+                    {index < orders.cart.length - 1 ? ', ' : ''} {/* Add a comma if it's not the last item */}
+                  </span>
+                ))}
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleClose}>
+                Save changes
+              </Button>
+            </DialogActions>
+          </BootstrapDialog>
+        </React.Fragment>
         <span>
           {/* Edit icon */}
           {/* <EditIcon style={iconStyle} onClick={handleEdit} /> */}
@@ -61,39 +134,29 @@ const OrderDetails = ({ menu }) => {
             selected={selected}
             onChange={() => {
               setSelected(!selected);
-            }}
-          >
+            }}>
             <CheckIcon />
           </ToggleButton>
         </span>
       </div>
 
-      <img
+      {/* <img
         src={imageURL + "/" + menu.image}
         height="250px"
         width="250px"
         alt="Menu"
         className={style.img + " object-cover mx-auto"}
-      />
+      /> */}
       <p>
         <strong>Quantity: </strong>
-        {/* {menu.desc} */}
+        {orders.cart.length}
+        {/* Quantity: 
+        <strong>{orders.cart.length}</strong> */}
       </p>
       <p>
-        <strong>Price: </strong>
-        RM {menu.price}
+        <strong>Status: </strong>
+        {orders.status}
       </p>
-      {/* <p>
-        <strong>Stock: </strong>
-        {menu.stock}
-      </p> */}
-      {/* <p>
-        <strong>Image: </strong>
-      </p> */}
-      {/* <p>
-        <strong>Added: </strong>
-        {formatDistanceToNow(new Date(menu.createdAt), { addSuffix: true })}
-      </p> */}
     </div>
   );
 };
