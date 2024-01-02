@@ -6,6 +6,7 @@ import EditForm from "../components/EditForm";
 import HomeLayout from "../layouts/HomeLayout";
 import QR from "../pages/seller/QR";
 import Order from "../pages/seller/Order";
+import SalesManagement from "../pages/seller/SalesManagement";
 
 export default function SellerRoutes() {
   return (
@@ -14,6 +15,7 @@ export default function SellerRoutes() {
         <Route index element={<Menu />} />
         <Route path="Order" element={<Order />} />
         <Route path="QR" element={<QR />} />
+        <Route path="SalesManagement" element={<SalesManagement />} />
         <Route path="editForm/:id" element={<EditForm />} />
       </Route>
     </Routes>

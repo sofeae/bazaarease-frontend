@@ -43,7 +43,7 @@ const QR = () => {
         // }}
         />
       </div>
-      <Button className="text-yellow-400 hover:text-yellow-500 bg-gray-800 font-bold text-decoration-line px-3"
+      <Button className="text-white hover:text-black bg-yellow-500 font-bold text-decoration-line px-3"
         onClick={onCanvasButtonClick}>Download QR Code</Button>
     </div>
   );
