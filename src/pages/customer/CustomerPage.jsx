@@ -7,7 +7,6 @@ const CustomerPage = () => {
         <div style={{ backgroundColor: 'white' }}>
             <Banner />
             <ProductsPreview />
-            {/* <About /> */}
         </div>
     )
 }

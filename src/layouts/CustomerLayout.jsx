@@ -9,9 +9,8 @@ export default function CustomerLayout() {
 
   return (
     <>
-    <Header cartCount={productInCart ? productInCart.length: 0 }/>
-    <Outlet />
-    <div>Footer</div>
+      <Header cartCount={productInCart ? productInCart.length : 0} />
+      <Outlet />
     </>
   )
 }

@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import { ProductPreviewCard } from "./ProductPreviewCard.jsx";
 import { backendBaseURL } from "../../utils/imageUrl.js";
-import { addToCart,cartProducts } from "../../stores/cart/cartSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { addToCart, cartProducts } from "../../stores/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import 'react-multi-carousel/lib/styles.css';
 
 export default function ProductsPreview() {
@@ -53,14 +53,8 @@ export default function ProductsPreview() {
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-black bg-white">
-      <h1>Test</h1>
+      {/* <h1>Test</h1> */}
       <Carousel responsive={responsive} >
-        {/* <div>TEMPORARY CART
-      {cart.map((product)=>{
-        return <div>{product.name}</div>
-      })}
-
-        </div> */}
         {menus.length > 0 &&
           menus.map((product, index) => {
             return (
