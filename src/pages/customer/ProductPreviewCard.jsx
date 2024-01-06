@@ -1,6 +1,6 @@
 import { imageURL } from "../../utils/imageUrl";
 import { AddProduct } from "./AddProduct";
-import "./ProductPreviewCard.module.css";
+import style from "./ProductPreviewCard.module.css";
 
 export const ProductPreviewCard = ({ product, onAddProduct }) => {
   const addProduct = () => {
@@ -16,12 +16,12 @@ export const ProductPreviewCard = ({ product, onAddProduct }) => {
         <img
           src={imageURL + "/" + product.image}
           alt={product.name}
-          className="w-40 h-40 object-cover" // Adjust the width and height as needed
+          className="w-40 h-40 object-cover rounded" // Adjust the width and height as needed
         />
       </div>
       <h1 className="text-lg">{product.name}</h1>
       <h2 className="pb-2 text-lg">RM {product.price}</h2>
-      <p className="text-sm mb-2 h-20 overflow-y-auto line-clamp-4 hide-scrollbar">
+      <p className={ style.scrollbar + " " + 'text-sm mb-2 h-20 overflow-y-auto line-clamp-4 hide-scrollbar' }>
         {product.desc}
       </p>
       <AddProduct onAddProduct={addProduct} />

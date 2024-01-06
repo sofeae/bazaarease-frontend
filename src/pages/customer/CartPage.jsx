@@ -10,7 +10,7 @@ import { PaymentWrapper } from "./PaymentForm.jsx";
 
 const CartPage = () => {
     const cart = useSelector(cartProducts);
-    const tabs= ['Summary', 'Payment'];
+    const tabs = ['Summary', 'Payment'];
     const [currentTab, handleTabSwitch] = useTabSwitch(tabs, 'Summary');
 
     if (!cart || cart.length === 0) {
@@ -22,22 +22,22 @@ const CartPage = () => {
     }
 
     return (
-        <div className="bg-white h-screen text-black mx-auto mt-2 border border-gray-200 p-4 md:w-2/3 rounded-lg shadow-md sm:p-6 lg:p-8">
-            <Tabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
-            <div className={`tabs ${currentTab !== 'Summary' ? 'hidden' : ''}`}>
-                <ProductsSummary />
-                <div className="flex justify-end p-2">
-                    <Button variant="dark" className="flex items-center" onClick={()=>handleTabSwitch('Payment')}><span className="mr-1">Next</span>
-                    {/* <ArrowRightSvg /> */}
-                    </Button>
+        <div className="flex items-center justify-center">
+            <div className="bg-white text-black border-gray-400 ml-2 mr-2 mt-6 mb-10 border p-4 md:w-2/3 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
+                <Tabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
+                <div className={`tabs ${currentTab !== 'Summary' ? 'hidden' : ''}`}>
+                    <ProductsSummary />
+                    <div className="flex justify-end p-2 mt-6">
+                        <button
+                            className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
+                            onClick={() => handleTabSwitch('Payment')}
+                        >
+                            <span>Next</span></button>
+                    </div>
                 </div>
-            </div>
-            {/* <div className={`tabs ${currentTab !== 'Delivery' ? 'hidden' : ''}`}>
-                <AddressForm onTabSwitch={handleTabSwitch}/>
-            </div> */}
-            <div className={`tabs ${currentTab !== 'Payment' ? 'hidden' : ''}`}>
-                <h1>meaw</h1>
-                <PaymentWrapper />
+                <div className={`tabs ${currentTab !== 'Payment' ? 'hidden' : ''}`}>
+                    <PaymentWrapper />
+                </div>
             </div>
         </div>
     )

@@ -6,18 +6,20 @@ export const ProductsSummaryCard = ({ product }) => {
     const dispatch = useDispatch();
 
     return (
-        <div className="flex p-1 sm:p-2 border-b border-b-gray-200">
-            <div className="product-image mr-2 border border-grey-200 rounded-lg w-full sm:w-1/3">
+        <div className="flex p-1 sm:p-2 border-b border-b-gray-300">
+            <div className="product-image border border-gray-200 w-40 h-40 p-4 m-2 rounded">
                 <img
                     src={`${imageURL}/${product.image}`}
                     alt={product.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    className="w-full h-full object-cover"
+                />
             </div>
-            <div className="product-info">
-                <h3>{product.name}</h3>
-                <p className="text-gray-600">{product.desc}</p>
+            
+            <div className="product-info mt-4 ml-2">
+                <h3 className="font-bold">{product.name}</h3>
             </div>
-            <div className="product-price-qt flex flex-col items-center justify-center">
+    
+            <div className="product-price-qt flex flex-col items-center justify-center ml-auto">
                 <div className="price">{`${product.price}$`}</div>
                 <div className="quantity flex">
                     <button className="p-1" disabled={product.amount <= 0} onClick={() => dispatch(decrementProductAmount(product))}>-</button>
@@ -26,5 +28,5 @@ export const ProductsSummaryCard = ({ product }) => {
                 </div>
             </div>
         </div>
-    )
+    );    
 }

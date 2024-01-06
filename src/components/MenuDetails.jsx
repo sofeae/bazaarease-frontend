@@ -86,7 +86,7 @@ const MenuDetails = ({ menu }) => {
         height="250px"
         width="250px"
         alt="Menu"
-        className={style.img + ' object-cover mx-auto'}
+        className={style.img + 'object-cover mx-auto'}
       />
       <p>
         <strong>Description: </strong>

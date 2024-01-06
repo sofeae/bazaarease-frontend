@@ -1,5 +1,6 @@
 /* styles.css */
-.hide-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+.scrollbar::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
 }

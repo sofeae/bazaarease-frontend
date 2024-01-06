@@ -4,15 +4,18 @@ import queue from "../../assets/images/queue.png";
 
 const PaymentSuccessPage = () => {
   const { queueNum } = useLocation().state;
+
   return (
     <div className="flex flex-col items-center justify-top h-screen">
-      <img src={queue} alt="Queue Image" className="h-96 mt-0"/>
+      <Alert variant="success" className="mb-4 mt-10 bg-yellow-300">
+        Your payment was successful
+      </Alert>
+      <img src={queue} alt="Queue Image" className="h-64 mt-0 mb-0" />
       <div className="max-w-lg mx-auto p-4">
-        <Alert variant="success">
-          Your payment was successful
-          <hr />
-          Your Queue Number: #{queueNum}
-        </Alert>
+        <div className="p-6 rounded-lg text-xl text-center">
+          Your Queue Number:<br /> <br />
+          <span className="font-bold text-5xl"> #{queueNum}</span>
+        </div>
       </div>
     </div>
   );

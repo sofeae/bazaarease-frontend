@@ -23,7 +23,7 @@ const Navbar = () => {
             <img src={bazaar} alt="logo" className="w-32 h-32 object-cover" />
           </Link>
         </div> */}
-        <Link to="/seller">
+        <Link to="/seller"> 
         <h1 className="text-3xl font-bold">BazaarEase</h1>
         </Link>
         <nav className={styles.nav}>
