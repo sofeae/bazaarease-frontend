@@ -78,16 +78,18 @@ const OrderDetails = ({ orders }) => {
     <div className="flex flex-col bg-yellow p-3 w-full justify-center shadow-xl">
       <div className="flex justify-between">
         <React.Fragment>
-          <h4 className="text-yellow-500 font-bold text-xl" onClick={handleClickOpen}>
-            {orders.queueNum}
+          <h4 className="text-yellow-500 font-bold text-2xl mb-2" onClick={handleClickOpen}>
+            #{orders.queueNum}
           </h4>
           <BootstrapDialog
             onClose={handleClose}
             aria-labelledby="customized-dialog-title"
             open={open}
+            maxWidth="sm" // Set the maximum width
+            fullWidth // Use full width
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-              Order Details
+              Order Details #{orders.queueNum}
             </DialogTitle>
             <IconButton
               aria-label="close"
@@ -105,23 +107,26 @@ const OrderDetails = ({ orders }) => {
               <Typography gutterBottom>
                 {orders.cart.map((item, index) => (
                   <span key={index}>
-                    <p><strong>Name: </strong>
+                    <p>
+                      <strong>{index + 1}. </strong>
                       {item.name}
                     </p>
-                    <p><strong>Description: </strong>
-                      {item.desc}
+                    <p>
+                      <strong>Quantity: </strong>
+                      {/* {item.desc} */}
                     </p>
-                    {index < orders.cart.length - 1 ? ', ' : ''} {/* Add a comma if it's not the last item */}
+                    {index < orders.cart.length - 1 ? <br /> : ''}
                   </span>
                 ))}
               </Typography>
             </DialogContent>
-            <DialogActions>
+            {/* <DialogActions>
               <Button autoFocus onClick={handleClose}>
                 Save changes
               </Button>
-            </DialogActions>
+            </DialogActions> */}
           </BootstrapDialog>
+
         </React.Fragment>
         <span>
           {/* Edit icon */}
@@ -134,21 +139,15 @@ const OrderDetails = ({ orders }) => {
             selected={selected}
             onChange={() => {
               setSelected(!selected);
-            }}>
-            <CheckIcon />
+            }}
+            style={{ padding: '4px', width: '24px', height: '24px' }}
+          >
+            <CheckIcon style={{ fontSize: '20px' }} />
           </ToggleButton>
         </span>
       </div>
-
-      {/* <img
-        src={imageURL + "/" + menu.image}
-        height="250px"
-        width="250px"
-        alt="Menu"
-        className={style.img + " object-cover mx-auto"}
-      /> */}
       <p>
-        <strong>Quantity: </strong>
+        <strong>Total Quantity: </strong>
         {orders.cart.length}
         {/* Quantity: 
         <strong>{orders.cart.length}</strong> */}
@@ -157,7 +156,7 @@ const OrderDetails = ({ orders }) => {
         <strong>Status: </strong>
         {orders.status}
       </p>
-    </div>
+    </div >
   );
 };
 
