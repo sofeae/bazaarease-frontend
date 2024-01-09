@@ -75,88 +75,90 @@ const OrderDetails = ({ orders }) => {
   };
 
   return (
-    <div className="flex flex-col bg-yellow p-3 w-full justify-center shadow-xl">
-      <div className="flex justify-between">
-        <React.Fragment>
-          <h4 className="text-yellow-500 font-bold text-2xl mb-2" onClick={handleClickOpen}>
-            #{orders.queueNum}
-          </h4>
-          <BootstrapDialog
-            onClose={handleClose}
-            aria-labelledby="customized-dialog-title"
-            open={open}
-            maxWidth="sm" // Set the maximum width
-            fullWidth // Use full width
-          >
-            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-              Order Details #{orders.queueNum}
-            </DialogTitle>
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-              }}
+    // <div className="bg-gray-200 border border-gray-300 p-4">
+      <div className="flex flex-col p-3 w-full justify-center shadow-xl border border-yellow-500 rounded">
+        <div className="flex justify-between">
+          <React.Fragment>
+            <h4 className="text-yellow-500 font-bold text-2xl mb-2" onClick={handleClickOpen}>
+              #{orders.queueNum}
+            </h4>
+            <BootstrapDialog 
+              onClose={handleClose}
+              aria-labelledby="customized-dialog-title"
+              open={open}
+              maxWidth="sm" // Set the maximum width
+              fullWidth // Use full width
             >
-              <CloseIcon />
-            </IconButton>
-            <DialogContent dividers>
-              <Typography gutterBottom>
-                {orders.cart.map((item, index) => (
-                  <span key={index}>
-                    <p>
-                      <strong>{index + 1}. </strong>
-                      {item.name}
-                    </p>
-                    <p>
-                      <strong>Quantity: </strong>
-                      {/* {item.desc} */}
-                    </p>
-                    {index < orders.cart.length - 1 ? <br /> : ''}
-                  </span>
-                ))}
-              </Typography>
-            </DialogContent>
-            {/* <DialogActions>
+              <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                Order Details #{orders.queueNum}
+              </DialogTitle>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+              <DialogContent dividers>
+                <Typography gutterBottom>
+                  {orders.cart.map((item, index) => (
+                    <span key={index}>
+                      <p>
+                        <strong>{index + 1}. </strong>
+                        {item.name}
+                      </p>
+                      <p>
+                        <strong>Quantity: </strong>
+                        {/* {item.desc} */}
+                      </p>
+                      {index < orders.cart.length - 1 ? <br /> : ''}
+                    </span>
+                  ))}
+                </Typography>
+              </DialogContent>
+              {/* <DialogActions>
               <Button autoFocus onClick={handleClose}>
                 Save changes
               </Button>
             </DialogActions> */}
-          </BootstrapDialog>
+            </BootstrapDialog>
 
-        </React.Fragment>
-        <span>
-          {/* Edit icon */}
-          {/* <EditIcon style={iconStyle} onClick={handleEdit} /> */}
-          {/* <Link to={`EditForm/${menu._id}`}>
+          </React.Fragment>
+          <span>
+            {/* Edit icon */}
+            {/* <EditIcon style={iconStyle} onClick={handleEdit} /> */}
+            {/* <Link to={`EditForm/${menu._id}`}>
             <EditIcon style={iconStyle} />
           </Link> */}
-          <ToggleButton
-            value="check"
-            selected={selected}
-            onChange={() => {
-              setSelected(!selected);
-            }}
-            style={{ padding: '4px', width: '24px', height: '24px' }}
-          >
-            <CheckIcon style={{ fontSize: '20px' }} />
-          </ToggleButton>
-        </span>
-      </div>
-      <p>
-        <strong>Total Quantity: </strong>
-        {orders.cart.length}
-        {/* Quantity: 
+            <ToggleButton
+              value="check"
+              selected={selected}
+              onChange={() => {
+                setSelected(!selected);
+              }}
+              style={{ padding: '4px', width: '24px', height: '24px' }}
+            >
+              <CheckIcon style={{ fontSize: '20px' }} />
+            </ToggleButton>
+          </span>
+        </div>
+        <p>
+          <strong>Total Quantity: </strong>
+          {orders.cart.length}
+          {/* Quantity: 
         <strong>{orders.cart.length}</strong> */}
-      </p>
-      <p>
-        <strong>Status: </strong>
-        {orders.status}
-      </p>
-    </div >
+        </p>
+        <p>
+          <strong>Status: </strong>
+          {orders.status}
+        </p>
+      </div >
+    // </div>
   );
 };
 

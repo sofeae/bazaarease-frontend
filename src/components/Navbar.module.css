@@ -13,7 +13,7 @@
 }
 
 .header a {
-  color: #333;
+  color: #fdfbfb;
   text-decoration: none;
 }
 
@@ -31,7 +31,7 @@
 .nav button {
   background: #fff;
   color: var(--primary);
-  border: 2px solid var(--primary);
+  /* border: 2px solid var(--primary); */
   padding: 6px 10px;
   border-radius: 4px;
   font-family: "Poppins";

@@ -39,7 +39,6 @@ const EditForm = () => {
     loadData();
   }, []);
 
-  //Ubahsuai
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(event.target.files[0]);
@@ -77,21 +76,29 @@ const EditForm = () => {
       setName("");
       setDesc("");
       setPrice("");
-      // setStock("");
       setImage("");
       setError(null);
       setEmptyFields([]);
       dispatch({ type: "CREATE_MENUS", payload: json });
       nav("/seller");
     }
-    //End from old
   };
 
   return (
     <>
       <form className="create" onSubmit={handleSubmit}>
-        <h3>Edit Menu</h3>
-
+        <h1 className="text-3xl font-bold text-center mt-6">Edit Menu</h1>
+  
+        <div className="flex justify-center">
+          <img
+            id="currentImage"
+            src={currentImage}
+            className="object-cover mt-6 mb-4"
+            height="250px"
+            width="250px"
+          />
+        </div>
+  
         <label>Menu Name:</label>
         <input
           type="text"
@@ -99,7 +106,7 @@ const EditForm = () => {
           value={name}
           className={emptyFields.includes("title") ? "error" : ""}
         />
-
+  
         <label>Description:</label>
         <input
           type="text"
@@ -107,7 +114,7 @@ const EditForm = () => {
           value={desc}
           className={emptyFields.includes("desc") ? "error" : ""}
         />
-
+  
         <label>Price:</label>
         <input
           type="number"
@@ -115,34 +122,20 @@ const EditForm = () => {
           value={price}
           className={emptyFields.includes("price") ? "error" : ""}
         />
-
-        {/* <label>Stock:</label>
-        <input
-          type="number"
-          onChange={(e) => setStock(e.target.value)}
-          value={stock}
-          className={emptyFields.includes("stock") ? "error" : ""}
-        /> */}
-
+  
         <label>Image:</label>
         <input
           type="file"
           onChange={onImageChange}
           className={emptyFields.includes("image") ? "error" : ""}
         />
-
-        <button onClick={handleSubmit}>Save Edit</button>
+  
+        <button className="bg-yellow-500 text-white px-4 py-2 rounded mt-2 mb-4" onClick={handleSubmit}>Save Edit</button>
         {error && <div className="error">{error}</div>}
       </form>
-      <img
-        id="currentImage"
-        src={currentImage}
-        className="object-cover"
-        height="250px"
-        width="250px"
-      ></img>
     </>
   );
+  
 };
 
 export default EditForm;

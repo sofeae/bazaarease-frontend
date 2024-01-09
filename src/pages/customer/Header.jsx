@@ -8,14 +8,13 @@ import { Link, useParams } from "react-router-dom";
 export const Header = ({ cartCount }) => {
     const { userId } = useParams();
 
-
     return (
         <nav id="header" className="bg-white text-black border-b-2 border-black-300">
-          <div className="w-full container mx-auto flex items-center justify-between mt-0 py-2">
+          <div className="w-full container mx-auto flex items-center justify-between mt-3 mb-3 py-2">
             <div className="logo-wrapper pl-4 flex items-center">
-              <Link to={`/menu/${userId}/CustomerPage`} className="toggleColor text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl">
+              {/* <Link to={`/menu/${userId}/CustomerPage`} className="toggleColor text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl">
                 <img src={bazaar} alt="logo" className="w-32 h-32 object-cover" />
-              </Link>
+              </Link> */}
               <h1 className="text-3xl font-bold ml-4">BazaarEase</h1>
             </div>
             <div className="flex items-center justify-center space-x-4">
