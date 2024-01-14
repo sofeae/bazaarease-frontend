@@ -87,7 +87,7 @@ const EditForm = () => {
   return (
     <>
       <form className="create" onSubmit={handleSubmit}>
-        <h1 className="text-3xl font-bold text-center mt-6">Edit Menu</h1>
+        <h1 className="text-2xl font-bold text-center mt-6">Edit Product Details</h1>
   
         <div className="flex justify-center">
           <img

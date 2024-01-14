@@ -23,20 +23,21 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    logout();
-    navigate("/login");
-  };
-
-  // const handleEdit = () => {
-  //   navigate("EditProfile");
-  // }
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClickProfile = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClick = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const handleEdit = () => {
+    navigate("/EditProfile");
+  }
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -59,20 +60,20 @@ const Navbar = () => {
               {/* <button onClick={handleClick}>Log out</button> */}
               <React.Fragment>
                 {/* <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}> */}
-                  {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
+                {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
                   <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
-                  <Tooltip title="Account settings">
-                    <IconButton
-                      onClick={handleClickProfile}
-                      size="small"
-                      sx={{ ml: 2 }}
-                      aria-controls={open ? 'account-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                    >
-                      <Avatar sx={{ width: 32, height: 32 }}></Avatar>
-                    </IconButton>
-                  </Tooltip>
+                <Tooltip title="Account settings">
+                  <IconButton
+                    onClick={handleClickProfile}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={open ? 'account-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                  >
+                    <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                  </IconButton>
+                </Tooltip>
                 {/* </Box> */}
                 <Menu
                   anchorEl={anchorEl}
@@ -109,7 +110,7 @@ const Navbar = () => {
                   transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={handleEdit}>
                     <Avatar /> Profile
                   </MenuItem>
                   {/* <MenuItem onClick={handleClose}>

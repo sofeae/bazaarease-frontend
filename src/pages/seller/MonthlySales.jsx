@@ -60,7 +60,7 @@ function Row(props) {
           <TableCell component="th" scope="row">
             {row.name}
           </TableCell>
-          <TableCell align="left">{row.calories}</TableCell>
+          {/* <TableCell align="left">{row.calories}</TableCell> */}
           <TableCell align="left">RM {row.fat}</TableCell>
           {/* <TableCell align="right">{row.carbs}</TableCell>
         <TableCell align="right">{row.protein}</TableCell> */}
@@ -76,9 +76,9 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       {/* <TableCell>Date</TableCell> */}
-                      <TableCell>Product</TableCell>
-                      <TableCell align="left">Amount</TableCell>
-                      <TableCell align="left">Total Price</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell align="left">Total daily sales</TableCell>
+                      {/* <TableCell align="left">Total Price</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -87,9 +87,9 @@ function Row(props) {
                         {/* <TableCell component="th" scope="row">{historyRow.date}</TableCell> */}
                         <TableCell>{historyRow.customerId}</TableCell>
                         <TableCell align="left">{historyRow.amount}</TableCell>
-                        <TableCell align="left">
+                        {/* <TableCell align="left">
                           {Math.round(historyRow.amount * historyRow.price * 100)}
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     ))}
                   </TableBody>
@@ -123,11 +123,18 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+  createData('January', 159, 6.0, 24, 4.0, 3.99),
+  createData('February', 237, 9.0, 37, 4.3, 4.99),
+  createData('March', 262, 16.0, 24, 6.0, 3.79),
+  createData('April', 305, 3.7, 67, 4.3, 2.5),
+  createData('May', 356, 16.0, 49, 3.9, 1.5),
+  createData('June', 356, 16.0, 49, 3.9, 1.5),
+  createData('July', 356, 16.0, 49, 3.9, 1.5),
+  createData('August', 356, 16.0, 49, 3.9, 1.5),
+  createData('September', 356, 16.0, 49, 3.9, 1.5),
+  createData('October', 356, 16.0, 49, 3.9, 1.5),
+  createData('November', 356, 16.0, 49, 3.9, 1.5),
+  createData('December', 356, 16.0, 49, 3.9, 1.5),
 ];
 
 export default function CollapsibleTable() {
@@ -152,9 +159,9 @@ export default function CollapsibleTable() {
               <TableHead>
                 <TableRow className="bg-yellow-500">
                   <TableCell />
-                  <TableCell >Date</TableCell>
-                  <TableCell align="left" >Total Orders</TableCell>
-                  <TableCell align="left" >Total Sales</TableCell>
+                  <TableCell >Month</TableCell>
+                  {/* <TableCell align="center" >Total Orders</TableCell> */}
+                  <TableCell align="left" >Total Monthly Sales</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
