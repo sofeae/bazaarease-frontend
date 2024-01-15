@@ -9,24 +9,28 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            console.log(state.products);
-            return { products: [...state.products, {...action.payload, amount: 1}]}
+            state.products.push({ ...action.payload, amount: 1 });
         },
         clearCart: (state) => {
-            return { products: []}
+            state.products = [];
         },
         incrementProductAmount: (state, action) => {
-            console.log('increment');
-            return { products: state.products.map(product => product.id === action.payload.id ? {...product, amount: product.amount + 1} : product)}
+            const productIndex = state.products.findIndex(product => product.id === action.payload.id);
+            if (productIndex !== -1) {
+                state.products[productIndex].amount += 1;
+            }
         },
         decrementProductAmount: (state, action) => {
-            return { products: state.products.map(product => product.id === action.payload.id ? {...product, amount: product.amount - 1} : product)}
+            const productIndex = state.products.findIndex(product => product.id === action.payload.id);
+            if (productIndex !== -1 && state.products[productIndex].amount > 0) {
+                state.products[productIndex].amount -= 1;
+            }
         }
     }
-})
+});
 
-export const cartProducts = state => state.cart.products
+export const cartProducts = state => state.cart.products;
 
-export const {  addToCart, clearCart, incrementProductAmount, decrementProductAmount } = cartSlice.actions
+export const { addToCart, clearCart, incrementProductAmount, decrementProductAmount } = cartSlice.actions;
 
-export default cartSlice.reducer
+export default cartSlice.reducer;

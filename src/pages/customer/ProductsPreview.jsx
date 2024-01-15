@@ -45,21 +45,25 @@ export default function ProductsPreview() {
     loadData();
   }, [])
 
-  const onAddProduct = (product) => {
-    dispatch(addToCart(product))
-    console.log(product)
-    console.log(cart)
-  }
+  const onAddProduct = (product, updatedAmount) => {
+    const updatedProduct = { ...product, amount: updatedAmount };
+    dispatch(addToCart(updatedProduct));
+    console.log(product);
+    console.log(cart);
+  };
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-black bg-white">
-      {/* <h1>Test</h1> */}
-      <Carousel responsive={responsive} >
+      <Carousel responsive={responsive}>
         {menus.length > 0 &&
           menus.map((product, index) => {
             return (
               <div key={index} className="w-full px-2 h-full">
-                <ProductPreviewCard key={index} product={product} onAddProduct={onAddProduct} />
+                <ProductPreviewCard
+                  key={index}
+                  product={product}
+                  onAddProduct={(updatedProduct) => onAddProduct(updatedProduct, product.amount)}
+                />
               </div>
             );
           })}

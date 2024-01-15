@@ -136,8 +136,13 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-const ChooseQuantity = () => {
+const ChooseQuantity = ({ onChange }) => {
   const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (event, value) => {
+    setQuantity(value);
+    onChange(value);
+  };
 
   return (
     <NumberInput
@@ -146,7 +151,7 @@ const ChooseQuantity = () => {
       min={1}
       max={99}
       value={quantity}
-      onChange={(event, value) => setQuantity(value)}
+      onChange={handleQuantityChange}
     />
   );
 };

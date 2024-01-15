@@ -1,9 +1,23 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { incrementProductAmount, decrementProductAmount } from "../../stores/cart/cartSlice";
 import { imageURL } from "../../utils/imageUrl";
 
 export const ProductsSummaryCard = ({ product }) => {
     const dispatch = useDispatch();
+  
+    const cartProducts = useSelector((state) => state.cart.products);
+    const cartProduct = cartProducts.find((cartItem) => cartItem.id === product.id);
+    const chosenQuantity = cartProduct ? cartProduct.amount : 0;
+  
+    const handleIncrement = () => {
+      dispatch(incrementProductAmount({ id: product.id, amount: chosenQuantity + 1 }));
+    };
+  
+    const handleDecrement = () => {
+      if (chosenQuantity > 0) {
+        dispatch(decrementProductAmount({ id: product.id, amount: chosenQuantity - 1 }));
+      }
+    };
 
     return (
         <div className="flex p-1 sm:p-2 border-b border-b-gray-300">
@@ -20,11 +34,11 @@ export const ProductsSummaryCard = ({ product }) => {
             </div>
     
             <div className="product-price-qt flex flex-col items-center justify-center ml-auto">
-                <div className="price">{`${product.price}$`}</div>
+                <div className="price">{`RM ${product.price}`}</div>
                 <div className="quantity flex">
-                    <button className="p-1" disabled={product.amount <= 0} onClick={() => dispatch(decrementProductAmount(product))}>-</button>
-                    <span className="p-1">{product.amount}</span>
-                    <button className="p-1" onClick={() => dispatch(incrementProductAmount(product))}>+</button>
+                    <button className="p-1" disabled={chosenQuantity <= 0} onClick={handleDecrement}>-</button>
+                    <span className="p-1">{chosenQuantity}</span>
+                    <button className="p-1" onClick={handleIncrement}>+</button>
                 </div>
             </div>
         </div>

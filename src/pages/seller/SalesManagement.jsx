@@ -44,8 +44,13 @@ function createData(name, calories, fat, carbs, protein, price) {
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  
+  const tabs = ['Monthly', 'Daily'];
+  const [currentTab, handleTabSwitch] = UseSalesTabSwitch(tabs, 'Daily');
+
   return (
+    <div className="bg-white text-black border-green-400 ml-2 mr-2 mt-6 mb-10 border p-6 md:w-3/4 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
+        <SalesTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
+        <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}></div>
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
@@ -99,8 +104,7 @@ function Row(props) {
           </TableCell>
         </TableRow>
       </React.Fragment>
-
-
+      </div>
   );
 }
 
@@ -132,10 +136,6 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    // <div className="bg-white text-black border-gray-400 ml-2 mr-2 mt-6 mb-10 border p-6 md:w-3/4 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
-    //     <SalesTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
-    //     <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}></div>
-    // </div>
     <Grid container spacing={2}>
       <Grid item xs={12}>
         {/* SparkLineChart component with sample data */}
