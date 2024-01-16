@@ -1,4 +1,4 @@
-import { OrderTabs } from "./Ordertabs";
+import { OrderTabs } from "./OrderTabs";
 import Button from "../../components/elements/Button";
 import UseOrderTabSwitch from "./UseOrderTabSwitch.jsx";
 import CurrentOrder from "./CurrentOrder.jsx";
