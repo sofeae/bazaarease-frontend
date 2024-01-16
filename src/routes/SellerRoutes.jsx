@@ -5,7 +5,7 @@ import Menu from "../pages/seller/Menu";
 import EditForm from "../components/EditForm";
 import HomeLayout from "../layouts/HomeLayout";
 import QR from "../pages/seller/QR";
-import Order from "../pages/seller/Order";
+import Order from "../pages/seller/Order.jsx";
 import SalesManagement from "../pages/seller/SalesManagement";
 import MonthlySales from "../pages/seller/MonthlySales";
 

@@ -78,23 +78,23 @@ const MenuDetails = ({ menu }) => {
   };
 
   //edit product details
-  const handleEdit = async () => {
-    if (!user) {
-      return;
-    }
+  // const handleEdit = async () => {
+  //   if (!user) {
+  //     return;
+  //   }
 
-    const response = await fetch(backendBaseURL + '/api/menus/' + menu._id, {
-      method: 'UPDATE',
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    const json = await response.json();
+  //   const response = await fetch(backendBaseURL + '/api/menus/' + menu._id, {
+  //     method: 'UPDATE',
+  //     headers: {
+  //       Authorization: `Bearer ${user.token}`,
+  //     },
+  //   });
+  //   const json = await response.json();
 
-    if (response.ok) {
-      dispatch({ type: 'UPDATE_MENUS', payload: json });
-    }
-  };
+  //   if (response.ok) {
+  //     dispatch({ type: 'UPDATE_MENUS', payload: json });
+  //   }
+  // };
 
   //icon style
   const iconStyle = {
@@ -106,7 +106,7 @@ const MenuDetails = ({ menu }) => {
   return (
     <div className="flex flex-col bg-white p-3 w-full justify-center shadow-xl rounded border border-black-400">
       <div className="flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex items-center"> 
           <Switch
             checked={checked}
             onChange={handleChange}

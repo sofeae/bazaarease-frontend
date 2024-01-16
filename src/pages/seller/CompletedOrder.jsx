@@ -9,29 +9,8 @@ import style from "./Menu.module.css";
 import OrderDetails from "../../components/OrderDetails";
 import { backendBaseURL } from "../../utils/imageUrl";
 
-const CompletedOrder = () => {
-  const { orders, dispatch } = useOrdersContext();
-  const { user } = useAuthContext();
+const CompletedOrder = ({completedOrders}) => {
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      const response = await fetch(backendBaseURL + "/api/order", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: "SET_ORDERS", payload: json });
-      }
-    };
-
-    if (user) {
-      fetchOrders();
-    }
-  }, [dispatch, user]);
-
-  // Check if orders is not null before applying filter
-  const completedOrders = orders && orders.filter(order => order.status);
 
   return (
     <div className="flex items-center justify-center h-full md:w-11/12">
@@ -53,3 +32,32 @@ const CompletedOrder = () => {
 };
 
 export default CompletedOrder;
+
+
+  // const { orders, dispatch } = useOrdersContext();
+  // const { user } = useAuthContext();
+
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     const response = await fetch(backendBaseURL + "/api/order/completed", {
+  //       method: "GET",
+  //       headers: { 
+  //         Authorization: `Bearer ${user.token}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+  //     const json = await response.json();
+  //     console.log("Completed Orders:",json);
+
+  //     if (response.ok) {
+  //       dispatch({ type: "SET_ORDERS", payload: json });
+  //     }
+  //   };
+
+  //   if (user) {
+  //     fetchOrders();
+  //   }
+  // }, [dispatch, user]);
+
+  // Check if orders is not null before applying filter
+  // const completedOrders = orders && orders.filter(order => order.status);

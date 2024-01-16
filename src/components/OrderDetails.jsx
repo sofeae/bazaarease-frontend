@@ -10,6 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import Button from '@mui/material/Button';
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,6 +24,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const OrderDetails = ({ orders, handleToggle }) => {
   const { dispatch } = useOrdersContext();
   const [open, setOpen] = React.useState(false);
+  const { user } = useAuthContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,10 +34,22 @@ const OrderDetails = ({ orders, handleToggle }) => {
     setOpen(false);
   };
 
+  // In your OrderDetails component
   const handleChange = () => {
+    //Update Server
+
+    const newStatus = orders.status ? false:true;
+
+    const response = fetch(`/api/order/${orders._id}`,{
+      method: "PATCH",
+      body: JSON.stringify({status:newStatus}),
+      headers: { 
+        Authorization: `Bearer ${user.token}`,
+        'Content-Type': 'application/json',
+      },
+    })
     // Toggle the order status and update it in the context
-    const updatedOrder = { ...orders, status: !orders.status };
-    dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+    dispatch({ type: 'UPDATE_ORDER', payload: { _id: orders._id } });
   };
 
   return (
@@ -91,7 +105,9 @@ const OrderDetails = ({ orders, handleToggle }) => {
           <ToggleButton
             value="check"
             selected={orders.status}
-            onChange={handleChange}
+            onChange={() => {
+              handleChange()
+            }}
             style={{ padding: '4px', width: '24px', height: '24px' }}
           >
             <CheckIcon style={{ fontSize: '20px' }} />
