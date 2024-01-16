@@ -8,7 +8,7 @@ import useTabSwitch from "./useTabSwitch";
 import { ProductsSummary } from "./ProductsSummary";
 import { PaymentWrapper } from "./PaymentForm.jsx";
 
-const CartPage = () => {
+const CartPage = () => { 
     const cart = useSelector(cartProducts);
     const tabs = ['Summary', 'Payment'];
     const [currentTab, handleTabSwitch] = useTabSwitch(tabs, 'Summary');
