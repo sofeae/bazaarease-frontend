@@ -1,13 +1,13 @@
 import { SalesTabs } from "./SalesTabs";
 import Button from "../../components/elements/Button";
-import useSalesTabSwitch from "./useSalesTabSwitch.jsx";
+import UseSalesTabSwitch from "./UseSalesTabSwitch.jsx";
 import CollapsibleDailyTable from "./DailySales.jsx";
 import CollapsibleMonthlyTable from "./MonthlySales.jsx";
 import MonthDropdown from "../../components/MonthDropdown";
 
 const SalesManagement = () => {
   const tabs = ['Daily', 'Monthly'];
-  const [currentTab, handleTabSwitch] = useSalesTabSwitch(tabs, 'Daily');
+  const [currentTab, handleTabSwitch] = UseSalesTabSwitch(tabs, 'Daily');
 
   return (
     <div className="flex items-center justify-center md:w-5/6 lg:w-5/6 min-w-900">
