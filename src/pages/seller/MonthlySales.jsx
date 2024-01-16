@@ -18,11 +18,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // import UseSalesTabSwitch from "./UseSalesTabSwitch";
 import { SalesTabs } from "./SalesTabs";
 
-function createData(name, calories, fat, carbs, protein, price) {
+function createData(month, totalMonthly, calories, carbs, protein, price) {
   return {
-    name,
+    month,
+    totalMonthly,
     calories,
-    fat,
     // carbs,
     // protein,
     // price,
@@ -57,13 +57,11 @@ function Row(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">
-            {row.name}
-          </TableCell>
+          <TableCell component="th" scope="row">{row.month}</TableCell>
           {/* <TableCell align="left">{row.calories}</TableCell> */}
-          <TableCell align="left">RM {row.fat}</TableCell>
+          <TableCell>RM {row.totalMonthly}</TableCell>
           {/* <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell> */}
+          <TableCell align="right">{row.protein}</TableCell> */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -77,7 +75,7 @@ function Row(props) {
                     <TableRow>
                       {/* <TableCell>Date</TableCell> */}
                       <TableCell>Date</TableCell>
-                      <TableCell align="left">Total daily sales</TableCell>
+                      <TableCell>Total daily sales</TableCell>
                       {/* <TableCell align="left">Total Price</TableCell> */}
                     </TableRow>
                   </TableHead>
@@ -106,7 +104,7 @@ Row.propTypes = {
   row: PropTypes.shape({
     calories: PropTypes.number.isRequired,
     carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
+    totalMonthly: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
       PropTypes.shape({
         amount: PropTypes.number.isRequired,
@@ -114,7 +112,7 @@ Row.propTypes = {
         date: PropTypes.string.isRequired,
       }),
     ).isRequired,
-    name: PropTypes.string.isRequired,
+    month: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     protein: PropTypes.number.isRequired,
   }).isRequired,
@@ -139,20 +137,20 @@ export default function CollapsibleMonthlyTable() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Paper className="m-4"> {/* Apply margin outside of the Paper component */}
+        <Paper className="m-2"> {/* Apply margin outside of the Paper component */}
           <TableContainer component={Paper}> {/* Add more padding to the right side of the table */}
             <Table aria-label="collapsible table">
               <TableHead>
                 <TableRow className="bg-yellow-500">
                   <TableCell />
-                  <TableCell >Month</TableCell>
+                  <TableCell>Month</TableCell>
                   {/* <TableCell align="center" >Total Orders</TableCell> */}
-                  <TableCell align="left" >Total Monthly Sales</TableCell>
+                  <TableCell>Total Monthly Sales</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.map((row) => (
-                  <Row key={row.name} row={row} />
+                  <Row key={row.month} row={row} />
                 ))}
               </TableBody>
             </Table>

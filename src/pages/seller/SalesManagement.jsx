@@ -18,29 +18,32 @@ const SalesManagement = () => {
           <SalesTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
         </div>
 
-        {/* MonthDropdown Component */}
-        <div className="sm:text-sm">
-          <MonthDropdown />
-        </div>
-
-        {/* Daily Table */}
+        {/* Daily Page Content */}
         <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}>
+          {/* MonthDropdown Component */}
+          <div className="sm:text-sm mb-2">
+            <MonthDropdown />
+          </div>
+
+          {/* Daily Table */}
           <CollapsibleDailyTable />
+
+          {/* Download Button */}
+          <div className="flex justify-end p-2 mt-4">
+            <button
+              className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
+              onClick={() => handleTabSwitch('Daily')}>
+              <span>Download</span>
+            </button>
+          </div>
         </div>
 
-        {/* Monthly Table */}
+        {/* Monthly Page Content */}
         <div className={`tabs ${currentTab !== 'Monthly' ? 'hidden' : ''}`}>
+          {/* Monthly Table */}
           <CollapsibleMonthlyTable />
         </div>
 
-        {/* Download Button */}
-        <div className="flex justify-end p-2 mt-4">
-          <button
-            className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
-            onClick={() => handleTabSwitch('Daily')}>
-            <span>Download</span>
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -17,16 +17,34 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
 const MenuDetails = ({ menu }) => {
   const { dispatch } = useMenusContext();
   const { user } = useAuthContext();
 
-  //product availability
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(menu.availability);
 
-  const handleChange = () => {
-    setChecked(!checked);
+  const handleChange = async () => {
+    if (!user) {
+      return;
+    }
+
+    const newAvailability = !checked;
+
+    const response = await fetch(backendBaseURL + '/api/menus/' + menu._id, {
+      method: 'PATCH', // Use PATCH for updating specific fields
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ availability: newAvailability }),
+    });
+
+    const json = await response.json();
+
+    if (response.ok) {
+      setChecked(newAvailability);
+      dispatch({ type: 'UPDATE_MENUS', payload: json });
+    }
   };
 
   //delete product

@@ -34,11 +34,18 @@ export default function ProductsPreview() {
   };
 
   async function loadData() {
-    const response = await fetch(backendBaseURL + `/api/customer/${userId}`);
-    const json = await response.json();
-    setMenus(json);
-    console.log(json);
-    console.log(menus);
+    try {
+      const response = await fetch(backendBaseURL + `/api/customer/${userId}`);
+      const json = await response.json();
+      
+      // Filter products with availability: true
+      const availableMenus = json.filter(product => product.availability === true);
+      
+      setMenus(availableMenus);
+      console.log(availableMenus);
+    } catch (error) {
+      console.error("Error while loading data:", error.message);
+    }
   }
 
   useEffect(() => {
@@ -65,7 +72,7 @@ export default function ProductsPreview() {
                   onAddProduct={(updatedProduct) => onAddProduct(updatedProduct, product.amount)}
                 />
               </div>
-            );
+            ); 
           })}
       </Carousel>
     </div>

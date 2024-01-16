@@ -14,7 +14,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import ChooseQuantity from "./ChooseQuantity.jsx";
 
 export const ProductPreviewCard = ({ product, onAddProduct }) => {
-  const [quantity, setQuantity] = React.useState(1);
+  const [quantity, setQuantity] = React.useState(1); 
 
   const handleQuantityChange = (value) => {
     setQuantity(value);

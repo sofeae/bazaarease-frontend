@@ -55,8 +55,8 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">(name){row.name}</TableCell>
-        <TableCell align="left">(calories){row.calories}</TableCell>
-        <TableCell align="left">RM (fat){row.fat}</TableCell>
+        <TableCell>(calories){row.calories}</TableCell>
+        <TableCell>RM (fat){row.fat}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -128,8 +128,8 @@ export default function CollapsibleDailyTable() {
                   <TableRow className="bg-yellow-500">
                     <TableCell />
                     <TableCell>Date</TableCell>
-                    <TableCell align="left">Total Orders</TableCell>
-                    <TableCell align="left">Total Daily Sales</TableCell>
+                    <TableCell>Total Orders</TableCell>
+                    <TableCell>Total Daily Sales</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
