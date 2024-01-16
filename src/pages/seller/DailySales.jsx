@@ -55,10 +55,10 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          (name){row.name}
         </TableCell>
-        <TableCell align="left">{row.calories}</TableCell>
-        <TableCell align="left">RM {row.fat}</TableCell>
+        <TableCell align="left">(calories){row.calories}</TableCell>
+        <TableCell align="left">RM (fat){row.fat}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -67,9 +67,9 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell align="left">Total daily sales</TableCell>
-                    <TableCell align="left">Total Price</TableCell>
+                    <TableCell>Products(date)</TableCell>
+                    <TableCell align="left">Total Product Ordered(amount)</TableCell>
+                    <TableCell align="left">Total Product Sales(price)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
