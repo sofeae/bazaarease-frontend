@@ -103,7 +103,7 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape({
     calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
+    // carbs: PropTypes.number.isRequired,
     totalMonthly: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
       PropTypes.shape({
@@ -113,8 +113,8 @@ Row.propTypes = {
       }),
     ).isRequired,
     month: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
+    // price: PropTypes.number.isRequired,
+    // protein: PropTypes.number.isRequired,
   }).isRequired,
 };
 

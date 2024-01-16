@@ -1,6 +1,6 @@
 import { SalesTabs } from "./SalesTabs";
 import Button from "../../components/elements/Button";
-import useSalesTabSwitch from "./useSalesTabSwitch";
+import useSalesTabSwitch from "./useSalesTabSwitch.jsx";
 import CollapsibleDailyTable from "./DailySales.jsx";
 import CollapsibleMonthlyTable from "./MonthlySales.jsx";
 import MonthDropdown from "../../components/MonthDropdown";
