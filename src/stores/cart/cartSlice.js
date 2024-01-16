@@ -15,18 +15,22 @@ export const cartSlice = createSlice({
             state.products = [];
         },
         incrementProductAmount: (state, action) => {
-            const productIndex = state.products.findIndex(product => product.id === action.payload.id);
+            const { id, index } = action.payload;
+            const productIndex = index !== -1 ? index : state.products.findIndex(item => item.id === id);
+
             if (productIndex !== -1) {
                 state.products[productIndex].amount += 1;
             }
         },
         decrementProductAmount: (state, action) => {
-            const productIndex = state.products.findIndex(product => product.id === action.payload.id);
+            const { id, index } = action.payload;
+            const productIndex = index !== -1 ? index : state.products.findIndex(item => item.id === id);
+
             if (productIndex !== -1 && state.products[productIndex].amount > 0) {
                 state.products[productIndex].amount -= 1;
             }
-        }
-    }
+        },
+    },
 });
 
 export const cartProducts = state => state.cart.products;

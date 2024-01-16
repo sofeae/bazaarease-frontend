@@ -12,10 +12,11 @@ const PaymentSuccessPage = () => {
       </Alert>
       <img src={queue} alt="Queue Image" className="h-64 mt-0 mb-0" />
       <div className="max-w-lg mx-auto p-4">
-        <div className="p-6 rounded-lg text-xl text-center">
-          Your Queue Number:<br /> <br />
+        <div className="rounded-lg text-xl text-center mb-4">
+          Your Queue Number: <br /> <br />
           <span className="font-bold text-5xl"> #{queueNum}</span>
         </div>
+        <div className="rounded-lg text-m text-center">Status: Preparing</div>
       </div>
     </div>
   );

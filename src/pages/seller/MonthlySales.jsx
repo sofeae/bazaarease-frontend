@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // import SparkLineChart from '../../components/elements/SparkLineChart';
-import UseSalesTabSwitch from "./UseSalesTabSwitch";
+// import UseSalesTabSwitch from "./UseSalesTabSwitch";
 import { SalesTabs } from "./SalesTabs";
 
 function createData(name, calories, fat, carbs, protein, price) {
@@ -99,8 +99,6 @@ function Row(props) {
           </TableCell>
         </TableRow>
       </React.Fragment>
-
-
   );
 }
 
@@ -137,24 +135,12 @@ const rows = [
   createData('December', 356, 16.0, 49, 3.9, 1.5),
 ];
 
-export default function CollapsibleTable() {
+export default function CollapsibleMonthlyTable() {
   return (
-    // <div className="bg-white text-black border-gray-400 ml-2 mr-2 mt-6 mb-10 border p-6 md:w-3/4 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
-    //     <SalesTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
-    //     <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}></div>
-    // </div>
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        {/* SparkLineChart component with sample data */}
-        {/* <Paper style={{ maxHeight: '200px' }} className="m-4 p-4">
-          <SparkLineChart data={[1, 4, 2, 5, 7, 2, 4, 6]} className="w-full h-full" />
-        </Paper> */}
-      </Grid>
-      <Grid item xs={12}>
-        {/* Apply margin outside of the Paper component */}
-        <Paper className="m-4">
-          <TableContainer component={Paper}>
-            {/* Add more padding to the right side of the table */}
+        <Paper className="m-4"> {/* Apply margin outside of the Paper component */}
+          <TableContainer component={Paper}> {/* Add more padding to the right side of the table */}
             <Table aria-label="collapsible table">
               <TableHead>
                 <TableRow className="bg-yellow-500">

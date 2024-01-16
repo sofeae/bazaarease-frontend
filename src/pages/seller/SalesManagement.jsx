@@ -1,171 +1,39 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-// import SparkLineChart from '../../components/elements/SparkLineChart';
-import UseSalesTabSwitch from "./UseSalesTabSwitch";
 import { SalesTabs } from "./SalesTabs";
+import Button from "../../components/elements/Button";
+// import { useSelector } from "react-redux";
+// import { cartProducts } from "../../stores/cart/cartSlice";
+import useSalesTabSwitch from "./useSalesTabSwitch";
+// import { ReactComponent as ArrowRightSvg } from "../../assets/icons/arrow-right-long-svgrepo-com.svg";
+// import { AddressForm } from "../../components/AddressForm";
+// import { ProductsSummary } from "./ProductsSummary";
+// import { PaymentWrapper } from "./PaymentForm.jsx";
+import CollapsibleDailyTable from "./DailySales.jsx";
+import CollapsibleMonthlyTable from "./MonthlySales.jsx";
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    // carbs,
-    // protein,
-    // price,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
-  };
-}
-
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  const tabs = ['Monthly', 'Daily'];
-  const [currentTab, handleTabSwitch] = UseSalesTabSwitch(tabs, 'Daily');
+const SalesManagement = () => {
+  const tabs = ['Daily', 'Monthly'];
+  const [currentTab, handleTabSwitch] = useSalesTabSwitch(tabs, 'Daily');
 
   return (
-    <div className="bg-white text-black border-green-400 ml-2 mr-2 mt-6 mb-10 border p-6 md:w-3/4 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
+    <div className="flex items-center justify-center md:w-5/6 lg:w-5/6 min-w-900">
+      <div className="bg-white text-black border-gray-400 mt-12 mb-16 border p-2 md:w-11/12 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
         <SalesTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
-        <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}></div>
-      <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {row.name}
-          </TableCell>
-          <TableCell align="left">{row.calories}</TableCell>
-          <TableCell align="left">RM {row.fat}</TableCell>
-          {/* <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell> */}
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                {/* <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography> */}
-                <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      {/* <TableCell>Date</TableCell> */}
-                      <TableCell>Product</TableCell>
-                      <TableCell align="left">Amount</TableCell>
-                      <TableCell align="left">Total Price</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.date}>
-                        {/* <TableCell component="th" scope="row">{historyRow.date}</TableCell> */}
-                        <TableCell>{historyRow.customerId}</TableCell>
-                        <TableCell align="left">{historyRow.amount}</TableCell>
-                        <TableCell align="left">
-                          {Math.round(historyRow.amount * historyRow.price * 100)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
+        <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}>
+          <CollapsibleDailyTable />
+        </div>
+        <div className={`tabs ${currentTab !== 'Monthly' ? 'hidden' : ''}`}>
+          <CollapsibleMonthlyTable />
+        </div>
+        <div className="flex justify-end p-2 mt-4">
+            <button
+              className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
+              onClick={() => handleTabSwitch('Daily')}>
+              <span>Download</span>
+            </button>
+          </div>
       </div>
+    </div>
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
-
-export default function CollapsibleTable() {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        {/* SparkLineChart component with sample data */}
-        {/* <Paper style={{ maxHeight: '200px' }} className="m-4 p-4">
-          <SparkLineChart data={[1, 4, 2, 5, 7, 2, 4, 6]} className="w-full h-full" />
-        </Paper> */}
-      </Grid>
-      <Grid item xs={12}>
-        {/* Apply margin outside of the Paper component */}
-        <Paper className="m-4">
-          <TableContainer component={Paper}>
-            {/* Add more padding to the right side of the table */}
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow className="bg-yellow-500">
-                  <TableCell />
-                  <TableCell >Date</TableCell>
-                  <TableCell align="left" >Total Orders</TableCell>
-                  <TableCell align="left" >Total Sales</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <Row key={row.name} row={row} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Grid>
-    </Grid>
-  );
-}
+export default SalesManagement;
