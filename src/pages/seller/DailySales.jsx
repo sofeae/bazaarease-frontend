@@ -54,9 +54,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          (name){row.name}
-        </TableCell>
+        <TableCell component="th" scope="row">(name){row.name}</TableCell>
         <TableCell align="left">(calories){row.calories}</TableCell>
         <TableCell align="left">RM (fat){row.fat}</TableCell>
       </TableRow>
@@ -123,7 +121,7 @@ export default function CollapsibleDailyTable() {
   return (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper className="m-4">
+          <Paper className="m-2">
             <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
                 <TableHead>
