@@ -3,19 +3,19 @@ import { incrementProductAmount, decrementProductAmount } from "../../stores/car
 import { imageURL } from "../../utils/imageUrl";
 
 // export const ProductsSummaryCard = ({ product }) => {
-    export const ProductsSummaryCard = ({ product }) => {
+    export const ProductsSummaryCard = ({ product,index }) => {
         const dispatch = useDispatch();
       
         const cartProducts = useSelector((state) => state.cart.products);
         const cartProduct = cartProducts.find((cartItem) => cartItem.id === product.id);
         const chosenQuantity = cartProduct ? cartProduct.amount : 0;
       
-        const handleIncrement = () => {
-            dispatch(incrementProductAmount({ id: product.id, index: cartProducts.findIndex(item => item.id === product.id) }));
+        const handleIncrement = (index) => {
+            dispatch(incrementProductAmount({ id: product.id, index: index }));
         };
       
-        const handleDecrement = () => {
-            dispatch(decrementProductAmount({ id: product.id, index: cartProducts.findIndex(item => item.id === product.id) }));
+        const handleDecrement = (index) => {
+            dispatch(decrementProductAmount({ id: product.id, index: index }));
         };
     
         return (
@@ -34,9 +34,9 @@ import { imageURL } from "../../utils/imageUrl";
                 <div className="product-price-qt flex flex-col items-center justify-center ml-auto">
                     <div className="price">{`RM ${product.price}`}</div>
                     <div className="quantity flex">
-                        <button className="p-1" disabled={chosenQuantity <= 0} onClick={handleDecrement}>-</button>
-                        <span className="p-1">{chosenQuantity}</span>
-                        <button className="p-1" onClick={handleIncrement}>+</button>
+                        <button className="p-1" disabled={product.amount <= 0} onClick={()=>{handleDecrement(index)}}>-</button>
+                        <span className="p-1">{product.amount}</span>
+                        <button className="p-1" onClick={()=>{handleIncrement(index)}}>+</button>
                     </div>
                 </div>
             </div>

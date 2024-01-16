@@ -23,10 +23,7 @@ export const ProductPreviewCard = ({ product, onAddProduct }) => {
   const addProduct = () => {
     const updatedProduct = {
       ...product,
-      amount: {
-        ...product.amount,
-        chosenQuantity: quantity,
-      },
+      amount: quantity,
     };
 
     onAddProduct(updatedProduct); // Pass the updated product to the onAddProduct function

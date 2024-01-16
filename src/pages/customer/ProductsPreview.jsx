@@ -52,11 +52,9 @@ export default function ProductsPreview() {
     loadData();
   }, [])
 
-  const onAddProduct = (product, updatedAmount) => {
-    const updatedProduct = { ...product, amount: updatedAmount };
-    dispatch(addToCart(updatedProduct));
-    console.log(product);
-    console.log(cart);
+  const onAddProduct = (product) => {
+    dispatch(addToCart(product));
+    console.log("Add Product To Card:",product)
   };
 
   return (
@@ -69,7 +67,7 @@ export default function ProductsPreview() {
                 <ProductPreviewCard
                   key={index}
                   product={product}
-                  onAddProduct={(updatedProduct) => onAddProduct(updatedProduct, product.amount)}
+                  onAddProduct={onAddProduct}
                 />
               </div>
             ); 
