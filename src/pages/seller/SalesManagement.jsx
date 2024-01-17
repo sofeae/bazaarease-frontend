@@ -21,9 +21,9 @@ const SalesManagement = () => {
         {/* Daily Page Content */}
         <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}>
           {/* MonthDropdown Component */}
-          <div className="sm:text-sm mb-2">
+          {/* <div className="sm:text-sm mb-2">
             <MonthDropdown />
-          </div>
+          </div> */}
 
           {/* Daily Table */}
           <CollapsibleDailyTable />

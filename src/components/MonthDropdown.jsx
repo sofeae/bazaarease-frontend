@@ -1,19 +1,31 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectSmall() {
-  const [month, setMonth] = React.useState('');
+export default function SelectSmall({ onMonthChange }) {
+  const [month, setMonth] = useState('January'); // Set January as the default
 
   const handleChange = (event) => {
-    setMonth(event.target.value);
+    const selectedMonth = event.target.value;
+    setMonth(selectedMonth);
+    onMonthChange(selectedMonth);
   };
 
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    { value: '01', label: 'January' },
+    { value: '02', label: 'February' },
+    { value: '03', label: 'March' },
+    { value: '04', label: 'April' },
+    { value: '05', label: 'May' },
+    { value: '06', label: 'June' },
+    { value: '07', label: 'July' },
+    { value: '08', label: 'August' },
+    { value: '09', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' },
   ];
 
   return (
@@ -26,12 +38,9 @@ export default function SelectSmall() {
         label="Month"
         onChange={handleChange}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {months.map((month, index) => (
-          <MenuItem key={index} value={index + 1}>
-            {month}
+        {months.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
           </MenuItem>
         ))}
       </Select>

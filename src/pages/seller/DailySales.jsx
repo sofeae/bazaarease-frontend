@@ -16,14 +16,46 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { backendBaseURL } from "../../utils/imageUrl";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import SelectSmall from '../../components/MonthDropdown';
 
 export default function CollapsibleDailyTable() {
   const [rows, setRows] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState('');
   const { user } = useAuthContext();
 
+  // Function to generate random dummy data
+  function generateDummyData() {
+    const startDate = new Date(2023, 0, 1); // January 1, 2023
+    const endDate = new Date(); // Current date
+
+    const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+    const dummyData = [];
+
+    for (let i = 0; i < daysDifference; i++) {
+      const currentDate = new Date(startDate);
+      currentDate.setDate(startDate.getDate() + i);
+
+      const formattedDate = currentDate.toISOString().split('T')[0];
+      const totalOrders = Math.floor(Math.random() * 10) + 1; // Random number of orders
+      const totalDailySales = Math.floor(Math.random() * 1000) + 1; // Random total sales
+
+      dummyData.push(createData(formattedDate, totalOrders, totalDailySales));
+    }
+
+    return dummyData;
+  }
+
+  //fetch real data
+  // useEffect(() => {
+  //   fetchData();
+  // }, [user.token, selectedMonth]);
+
+  // useEffect to fetch data (replace the existing fetchData function)
   useEffect(() => {
-    fetchData();
-  }, [user.token]);
+    // Fetch data or use the generated dummy data
+    const dummyData = generateDummyData();
+    setRows(dummyData);
+  }, []);
 
   // Function to group orders by date
   function groupOrdersByDate(orders) {
@@ -93,13 +125,9 @@ export default function CollapsibleDailyTable() {
 
   function createData(dayDate, totalOrders, totalDailySales) {
     const dateObject = new Date(dayDate);
-
+  
     return {
-      dayDate: dateObject.toLocaleDateString(undefined, {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-      }),
+      dayDate: dateObject.toISOString().split('T')[0], // Use ISO date string
       totalOrders,
       totalDailySales,
       history: [
@@ -115,7 +143,7 @@ export default function CollapsibleDailyTable() {
         },
       ],
     };
-  }
+  }  
 
   function Row(props) {
     const { row } = props;
@@ -186,9 +214,17 @@ export default function CollapsibleDailyTable() {
     }).isRequired,
   };
 
+  // Function to get the month from a date string
+  function getMonthFromDate(dateString) {
+    const dateObject = new Date(dateString);
+    const month = dateObject.getMonth() + 1; // Months are zero-indexed, so we add 1
+    return month < 10 ? `0${month}` : `${month}`; // Pad single-digit months with a leading zero
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
+        <SelectSmall onMonthChange={setSelectedMonth} />
         <Paper className="m-2">
           <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -201,9 +237,11 @@ export default function CollapsibleDailyTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => (
-                  <Row key={index} row={row} />
-                ))}
+                {rows
+                  .filter(row => !selectedMonth || getMonthFromDate(row.dayDate) === selectedMonth) // Filter by selected month
+                  .map((row, index) => (
+                    <Row key={index} row={row} />
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
