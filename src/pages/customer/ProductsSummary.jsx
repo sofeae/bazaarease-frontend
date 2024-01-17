@@ -5,6 +5,7 @@ import { ProductsSummaryCard } from "./ProductSummaryCard";
 export const ProductsSummary = () => {
     const cart = useSelector(cartProducts);
     console.log("ProductsSummary:",cart)
+    
     return (
         <div className="flex flex-col">
             { cart && cart?.map((product, index) => {

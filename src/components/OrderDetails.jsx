@@ -120,7 +120,7 @@ const OrderDetails = ({ orders, handleToggle }) => {
                     <p>
                       <strong>Quantity: </strong>
                       {/* Display the quantity */}
-                      {item.quantity}
+                      {item.amount}
                     </p>
                     {index < orders.cart.length - 1 ? <br /> : ''}
                   </span>

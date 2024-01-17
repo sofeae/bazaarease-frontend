@@ -9,7 +9,8 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.products.push({ ...action.payload });
+      const productToAdd = { ...action.payload, totalPrice: action.payload.price * action.payload.amount };
+      state.products.push(productToAdd);
     },
     clearCart: (state) => {
       state.products = [];
@@ -23,6 +24,7 @@ export const cartSlice = createSlice({
 
       if (productIndex !== -1) {
         state.products[productIndex].amount += 1;
+        state.products[productIndex].totalPrice = state.products[productIndex].amount * state.products[productIndex].price;
       }
     },
     decrementProductAmount: (state, action) => {
@@ -34,6 +36,7 @@ export const cartSlice = createSlice({
 
       if (productIndex !== -1 && state.products[productIndex].amount > 0) {
         state.products[productIndex].amount -= 1;
+        state.products[productIndex].totalPrice = state.products[productIndex].amount * state.products[productIndex].price;
       }
     },
   },

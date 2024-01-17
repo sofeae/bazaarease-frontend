@@ -1,9 +1,16 @@
-import { useLocation } from "react-router-dom";
-import { Alert } from "../../components/elements/Alert";
-import queue from "../../assets/images/queue.png";
+import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Alert } from '../../components/elements/Alert';
+import queue from '../../assets/images/queue.png';
+import { useOrdersContext } from '../../hooks/useOrdersContext'; // Import the context
 
 const PaymentSuccessPage = () => {
   const { queueNum } = useLocation().state;
+  const { orders } = useOrdersContext(); // Access orders from the context
+
+  const getStatusLabel = () => {
+    return orders && orders.status ? 'Ready' : 'Preparing';
+  };
 
   return (
     <div className="flex flex-col items-center justify-top h-screen">
@@ -16,7 +23,7 @@ const PaymentSuccessPage = () => {
           Your Queue Number: <br /> <br />
           <span className="font-bold text-5xl"> #{queueNum}</span>
         </div>
-        <div className="rounded-lg text-m text-center">Status: Preparing</div>
+        <div className="rounded-lg text-m text-center">Status: {getStatusLabel()}</div>
       </div>
     </div>
   );

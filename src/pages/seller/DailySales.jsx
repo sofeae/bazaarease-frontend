@@ -22,15 +22,15 @@ function createData(dayDate, totalOrders, totalDailySales) {
     totalDailySales,
     history: [
       {
-        product: '2020-01-05',
+        product: 'nasi lemak',
         productPrice: 5,
-        customerId: '11091700',
+        // customerId: '11091700',
         totalProductOrder: 3,
       },
       {
-        product: '2020-01-05',
+        product: 'udang',
         productPrice: 5,
-        customerId: 'Anonymous',
+        // customerId: 'Anonymous',
         totalProductOrder: 1,
       },
     ],
@@ -54,8 +54,8 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">{row.dayDate}</TableCell>
-        <TableCell>(calories){row.totalOrders}</TableCell>
-        <TableCell>RM (fat){row.totalDailySales}</TableCell>
+        <TableCell>{row.totalOrders}</TableCell>
+        <TableCell>RM {row.totalDailySales}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -64,10 +64,10 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Products(date)</TableCell>
-                    <TableCell>Product Price(new)</TableCell>
-                    <TableCell align="left">Total Product Ordered(amount)</TableCell>
-                    <TableCell align="left">Total Product Sales(price)</TableCell>
+                    <TableCell>Products</TableCell>
+                    <TableCell>Product Price</TableCell>
+                    <TableCell align="left">Total Product Ordered</TableCell>
+                    <TableCell align="left">Total Product Sales</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -100,7 +100,7 @@ Row.propTypes = {
       PropTypes.shape({
         product: PropTypes.string.isRequired,
         productPrice: PropTypes.number.isRequired,  // Change the type to number
-        customerId: PropTypes.string.isRequired,
+        // customerId: PropTypes.string.isRequired,
         totalProductOrder: PropTypes.number.isRequired,
       }),
     ).isRequired,
