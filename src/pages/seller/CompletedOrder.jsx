@@ -9,8 +9,7 @@ import style from "./Menu.module.css";
 import OrderDetails from "../../components/OrderDetails";
 import { backendBaseURL } from "../../utils/imageUrl";
 
-const CompletedOrder = ({completedOrders}) => {
-
+const CompletedOrder = ({completedOrders}) => { 
 
   return (
     <div className="flex items-center justify-center h-full md:w-11/12">
