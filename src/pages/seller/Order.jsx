@@ -12,7 +12,6 @@ const Order = () => {
   const tabs = ['Current Order', 'Completed Order'];
   const [currentTab, handleTabSwitch] = UseOrderTabSwitch(tabs, 'Current Order');
 
-
   const { orders, dispatch } = useOrdersContext();
   const completedOrders = orders && orders.filter(order => order.status);
   const { user } = useAuthContext();

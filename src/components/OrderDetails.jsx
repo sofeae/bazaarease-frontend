@@ -6,11 +6,15 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import { useAuthContext } from "../hooks/useAuthContext";
+
+//import dialog
+import DialogActions from '@mui/material/DialogActions';
+import DialogContentText from '@mui/material/DialogContentText';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import Button from '@mui/material/Button';
-import { useAuthContext } from "../hooks/useAuthContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -34,22 +38,45 @@ const OrderDetails = ({ orders, handleToggle }) => {
     setOpen(false);
   };
 
+  //open confirmation dialog
+  const [openConfirm, setOpenConfirm] = React.useState(false); // Add this state for confirmation dialog
+
+  const handleClickOpenConfirm = () => {
+    setOpenConfirm(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+  };
+
+  const handleConfirm = () => {
+    handleChange(); // Call handleChange when confirmed
+    handleCloseConfirm(); // Close the confirmation dialog
+  };
+
   // In your OrderDetails component
   const handleChange = () => {
     //Update Server
 
-    const newStatus = orders.status ? false:true;
+    const newStatus = orders.status ? false : true;
 
-    const response = fetch(`/api/order/${orders._id}`,{
+    const response = fetch(`/api/order/${orders._id}`, {
       method: "PATCH",
-      body: JSON.stringify({status:newStatus}),
-      headers: { 
+      body: JSON.stringify({ status: newStatus }),
+      headers: {
         Authorization: `Bearer ${user.token}`,
         'Content-Type': 'application/json',
       },
     })
     // Toggle the order status and update it in the context
     dispatch({ type: 'UPDATE_ORDER', payload: { _id: orders._id } });
+  };
+
+  //icon style
+  const iconStyle = {
+    marginRight: '8px',
+    cursor: 'pointer',
+    color: 'black',
   };
 
   return (
@@ -69,6 +96,7 @@ const OrderDetails = ({ orders, handleToggle }) => {
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               Order Details #{orders.queueNum}
             </DialogTitle>
+
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -105,13 +133,43 @@ const OrderDetails = ({ orders, handleToggle }) => {
           <ToggleButton
             value="check"
             selected={orders.status}
+            onClick={handleClickOpenConfirm} // Open the confirmation dialog on toggle click
+            style={{ padding: '4px', width: '24px', height: '24px' }}
+          >
+            <CheckIcon style={{ fontSize: '20px' }} />
+          </ToggleButton>
+          {/* Confirmation Dialog */}
+          <Dialog
+            open={openConfirm}
+            onClose={handleCloseConfirm}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Confirmation"}</DialogTitle>
+            <DialogContent>
+              {/* Conditionally render content based on the current status */}
+              <Typography gutterBottom>
+                {orders.status ?
+                  'Are you sure you want to change the order status to incomplete?' :
+                  'Are you sure the order is completed?'}
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseConfirm}>Cancel</Button>
+              <Button onClick={handleConfirm}>Confirm</Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* <ToggleButton
+            value="check"
+            selected={orders.status}
             onChange={() => {
               handleChange()
             }}
             style={{ padding: '4px', width: '24px', height: '24px' }}
           >
             <CheckIcon style={{ fontSize: '20px' }} />
-          </ToggleButton>
+          </ToggleButton> */}
         </span>
       </div>
       <p>
