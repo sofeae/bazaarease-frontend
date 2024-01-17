@@ -15,24 +15,23 @@ import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(name, calories, fat, carbs, protein, price) {
+function createData(dayDate, totalOrders, totalDailySales) {
   return {
-    name,
-    calories,
-    fat,
-    // carbs,
-    // protein,
-    // price,
+    dayDate,
+    totalOrders,
+    totalDailySales,
     history: [
       {
-        date: '2020-01-05',
+        product: '2020-01-05',
+        productPrice: 5,
         customerId: '11091700',
-        amount: 3,
+        totalProductOrder: 3,
       },
       {
-        date: '2020-01-02',
+        product: '2020-01-05',
+        productPrice: 5,
         customerId: 'Anonymous',
-        amount: 1,
+        totalProductOrder: 1,
       },
     ],
   };
@@ -54,9 +53,9 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">(name){row.name}</TableCell>
-        <TableCell>(calories){row.calories}</TableCell>
-        <TableCell>RM (fat){row.fat}</TableCell>
+        <TableCell component="th" scope="row">{row.dayDate}</TableCell>
+        <TableCell>(calories){row.totalOrders}</TableCell>
+        <TableCell>RM (fat){row.totalDailySales}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -66,17 +65,19 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Products(date)</TableCell>
+                    <TableCell>Product Price(new)</TableCell>
                     <TableCell align="left">Total Product Ordered(amount)</TableCell>
                     <TableCell align="left">Total Product Sales(price)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell>{historyRow.date}</TableCell>
-                      <TableCell align="left">{historyRow.amount}</TableCell>
+                    <TableRow key={historyRow.product}>
+                      <TableCell>{historyRow.product}</TableCell>
+                      <TableCell align="left">{historyRow.productPrice}</TableCell>
+                      <TableCell align="left">{historyRow.totalProductOrder}</TableCell>
                       <TableCell align="left">
-                        {Math.round(historyRow.amount * historyRow.price * 100)}
+                        {Math.round(historyRow.totalProductOrder * historyRow.productPrice)} 
                       </TableCell>
                     </TableRow>
                   ))}
@@ -92,28 +93,24 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    // carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
+    dayDate: PropTypes.string.isRequired,
+    totalOrders: PropTypes.number.isRequired,
+    totalDailySales: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
+        product: PropTypes.string.isRequired,
+        productPrice: PropTypes.number.isRequired,  // Change the type to number
         customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        totalProductOrder: PropTypes.number.isRequired,
       }),
     ).isRequired,
-    name: PropTypes.string.isRequired,
-    // price: PropTypes.number.isRequired,
-    // protein: PropTypes.number.isRequired,
   }).isRequired,
 };
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+  createData('2020-01-05', 3, 15),  // Adjusted values to match the createData function
+  createData('2020-01-02', 1, 5),
+  // Add more rows if needed
 ];
 
 export default function CollapsibleDailyTable() {
@@ -134,7 +131,7 @@ export default function CollapsibleDailyTable() {
                 </TableHead>
                 <TableBody>
                   {rows.map((row) => (
-                    <Row key={row.name} row={row} />
+                    <Row key={row.dayDate} row={row} />
                   ))}
                 </TableBody>
               </Table>
