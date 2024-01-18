@@ -7,7 +7,7 @@ import bazaar from "../assets/images/bazaar.png";
 import * as React from 'react';
 // import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
+import Menu from '@mui/material/Menu'; 
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
@@ -127,12 +127,12 @@ const Navbar = () => {
               </React.Fragment>
             </div>
           )}
-          {!user && (
+          {/* {!user && (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
             </div>
-          )}
+          )} */}
         </nav>
       </div>
     </header>

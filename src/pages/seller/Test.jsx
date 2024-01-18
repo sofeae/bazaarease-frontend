@@ -206,6 +206,8 @@ export default function CollapsibleMonthlyTable() {
     }).isRequired,
   };
 
+  console.log('Business Name:', useAuthContext().user.businessName);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -228,6 +230,14 @@ export default function CollapsibleMonthlyTable() {
             </Table>
           </TableContainer>
         </Paper>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h6" className="mt-2">
+          Business Name: {useAuthContext().user.businessName}
+        </Typography>
+        <Typography variant="h6">
+          Email: {user.email}
+        </Typography>
       </Grid>
     </Grid>
   );

@@ -7,7 +7,8 @@ import HomeLayout from "../layouts/HomeLayout";
 import QR from "../pages/seller/QR";
 import Order from "../pages/seller/Order.jsx";
 import SalesManagement from "../pages/seller/SalesManagement";
-import MonthlySales from "../pages/seller/MonthlySales";
+import Test from "../pages/seller/Test";
+
 
 export default function SellerRoutes() {
   return (
@@ -18,7 +19,7 @@ export default function SellerRoutes() {
         <Route path="QR" element={<QR />} />
         <Route path="SalesManagement" element={<SalesManagement />} />
         <Route path="editForm/:id" element={<EditForm />} />
-        <Route path="MonthlySales" element={<MonthlySales />} />
+        <Route path="Test" element={<Test />} />
       </Route>
     </Routes>
   );
