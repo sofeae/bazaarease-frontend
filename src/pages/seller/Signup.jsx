@@ -29,7 +29,7 @@ const Signup = () => {
   };
 
   const handleLogin = async () => {
-    await login(email, password, businessName)
+    await login(email, password)
     navigate('/');
   };
 
