@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function SelectSmall({ onMonthChange }) {
-  const [month, setMonth] = useState('January'); // Set January as the default
+  const [month, setMonth] = useState('01'); // Use '01' for January // Set January as the default
 
   const handleChange = (event) => {
     const selectedMonth = event.target.value;

@@ -14,90 +14,23 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { backendBaseURL } from "../../utils/imageUrl";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { backendBaseURL } from '../../utils/imageUrl';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import SelectSmall from '../../components/MonthDropdown';
 
-export default function CollapsibleDailyTable() {
+function CollapsibleDailyTable() {
   const [rows, setRows] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState('');
   const { user } = useAuthContext();
 
-  // Function to generate random dummy data
-  function generateDummyData() {
-    const startDate = new Date(2023, 0, 1); // January 1, 2023
-    const endDate = new Date(); // Current date
-
-    const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
-    const dummyData = [];
-
-    for (let i = 0; i < daysDifference; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
-
-      const formattedDate = currentDate.toISOString().split('T')[0];
-      const totalOrders = Math.floor(Math.random() * 10) + 1; // Random number of orders
-      const totalDailySales = Math.floor(Math.random() * 1000) + 1; // Random total sales
-
-      dummyData.push(createData(formattedDate, totalOrders, totalDailySales));
-    }
-
-    return dummyData;
-  }
-
-  //fetch real data
-  // useEffect(() => {
-  //   fetchData();
-  // }, [user.token, selectedMonth]);
-
-  // useEffect to fetch data (replace the existing fetchData function)
   useEffect(() => {
-    // Fetch data or use the generated dummy data
-    const dummyData = generateDummyData();
-    setRows(dummyData);
-  }, []);
-
-  // Function to group orders by date
-  function groupOrdersByDate(orders) {
-    const groupedOrders = {};
-
-    orders
-      .filter(order => order.status === true) // Filter orders with status true
-      .forEach(order => {
-        const date = new Date(order.createdAt).toLocaleDateString(undefined, {
-          day: 'numeric',
-          month: 'numeric',
-          year: 'numeric',
-        });
-
-        if (!groupedOrders[date]) {
-          groupedOrders[date] = [order];
-        } else {
-          groupedOrders[date].push(order);
-        }
-      });
-
-    return groupedOrders;
-  }
-
-  // Function to process orders and calculate totalDailySales
-  function processOrders(orders) {
-    const groupedOrders = groupOrdersByDate(orders);
-
-    const processedData = Object.entries(groupedOrders).map(([dayDate, orders]) => {
-      // Calculate totalDailySales by summing up totalAmount of all orders on the same date
-      const totalDailySales = orders.reduce((total, order) => total + order.totalAmount, 0);
-
-      return createData(dayDate, orders.length, totalDailySales);
-    });
-
-    return processedData;
-  }
+    fetchData();
+  }, [user.token, selectedMonth]);
 
   async function fetchData() {
     try {
-      const response = await fetch(backendBaseURL + "/api/order", {
-        method: "GET",
+      const response = await fetch(`${backendBaseURL}/api/order`, {
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
@@ -114,7 +47,14 @@ export default function CollapsibleDailyTable() {
         throw new Error('Invalid response format. Expected an array.');
       }
 
-      const processedData = processOrders(orders);
+      // Filter orders where status is true
+      const filteredOrders = orders.filter(order => order.status === true);
+
+      console.log('Fetched orders:', filteredOrders);
+
+      const processedData = processOrders(filteredOrders);
+
+      console.log('Processed data:', processedData);
 
       setRows(processedData);
     } catch (error) {
@@ -123,47 +63,114 @@ export default function CollapsibleDailyTable() {
     }
   }
 
-  function createData(dayDate, totalOrders, totalDailySales) {
+  function processOrders(orders) {
+    const groupedOrders = groupOrdersByDate(orders);
+
+    const processedData = Object.entries(groupedOrders).map(([dayDate, orders]) => {
+      const totalDailySales = orders.reduce((total, order) => total + order.totalAmount, 0);
+      const productNames = getUniqueProductNames(orders);
+      const orderDetails = getOrderDetails(orders);
+
+      return createData(dayDate, orders.length, totalDailySales, orderDetails);
+    });
+
+    return processedData;
+  }
+
+  function groupOrdersByDate(orders) {
+    const groupedOrders = {};
+
+    orders.forEach(order => {
+      const date = new Date(order.createdAt).toLocaleDateString(undefined, {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+      });
+
+      if (!groupedOrders[date]) {
+        groupedOrders[date] = [order];
+      } else {
+        groupedOrders[date].push(order);
+      }
+    });
+
+    return groupedOrders;
+  }
+
+  // Modify getUniqueProductNames function
+  function getUniqueProductNames(orders) {
+    const productNamesSet = new Set();
+
+    orders.forEach(order => {
+      if (order.cart && Array.isArray(order.cart)) {
+        order.cart.forEach(product => {
+          if (product && product.name) {
+            productNamesSet.add(product.name);
+          }
+        });
+      }
+    });
+
+    return Array.from(productNamesSet);
+  }
+
+  // Modify getOrderDetails function
+  function getOrderDetails(orders) {
+    return orders.map(order => ({
+      products: order.cart || [],
+      quantity: order.totalAmount,
+    }));
+  }
+
+  function createData(dayDate, totalOrders, totalDailySales, orderDetails) {
     const dateObject = new Date(dayDate);
-  
+
     return {
-      dayDate: dateObject.toISOString().split('T')[0], // Use ISO date string
+      dayDate: dateObject.toISOString().split('T')[0],
       totalOrders,
       totalDailySales,
-      history: [
-        {
-          product: 'nasi lemak',
-          productPrice: 5,
-          totalProductOrder: 3,
-        },
-        {
-          product: 'udang',
-          productPrice: 5,
-          totalProductOrder: 1,
-        },
-      ],
+      history: orderDetails.map((order, index) => ({
+        products: order.products,
+        quantity: order.quantity || 0,
+      })),
     };
-  }  
+  }
 
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+  
+    // Sort and make product names non-redundant in history
+    const sortedProductNames = [...new Set(row.history.flatMap(historyRow => historyRow.products.map(product => product.name)))];
+  
+    // Sort product names based on total amount in descending order
+    sortedProductNames.sort((productNameA, productNameB) => {
+      const totalAmountA = row.history
+        .filter(historyRow => historyRow.products.some(product => product.name === productNameA))
+        .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productNameA).amount, 0);
+  
+      const totalAmountB = row.history
+        .filter(historyRow => historyRow.products.some(product => product.name === productNameB))
+        .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productNameB).amount, 0);
+  
+      return totalAmountB - totalAmountA;
+    });
+  
 
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
+            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">{row.dayDate}</TableCell>
+          <TableCell component="th" scope="row">
+            {row.dayDate}
+          </TableCell>
           <TableCell>{row.totalOrders}</TableCell>
           <TableCell>{row.totalDailySales}</TableCell>
+          {/* Product Names column removed */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -173,19 +180,17 @@ export default function CollapsibleDailyTable() {
                   <TableHead>
                     <TableRow>
                       <TableCell>Products</TableCell>
-                      <TableCell>Product Price</TableCell>
-                      <TableCell align="left">Total Product Ordered</TableCell>
-                      <TableCell align="left">Total Product Sales</TableCell>
+                      <TableCell align="left">Total Amount</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.history.map((historyRow, index) => (
+                    {sortedProductNames.map((productName, index) => (
                       <TableRow key={index}>
-                        <TableCell>{historyRow.product}</TableCell>
-                        <TableCell align="left">{historyRow.productPrice}</TableCell>
-                        <TableCell align="left">{historyRow.totalProductOrder}</TableCell>
+                        <TableCell>{productName}</TableCell>
                         <TableCell align="left">
-                          {Math.round(historyRow.totalProductOrder * historyRow.productPrice)}
+                          {row.history
+                            .filter(historyRow => historyRow.products.some(product => product.name === productName))
+                            .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productName).amount, 0)}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -204,17 +209,18 @@ export default function CollapsibleDailyTable() {
       dayDate: PropTypes.string.isRequired,
       totalOrders: PropTypes.number,
       totalDailySales: PropTypes.number,
+      productNames: PropTypes.arrayOf(PropTypes.string),
       history: PropTypes.arrayOf(
         PropTypes.shape({
           product: PropTypes.string.isRequired,
           productPrice: PropTypes.number.isRequired,
           totalProductOrder: PropTypes.number.isRequired,
-        }),
+          totalProductSales: PropTypes.number.isRequired,
+        })
       ).isRequired,
     }).isRequired,
   };
 
-  // Function to get the month from a date string
   function getMonthFromDate(dateString) {
     const dateObject = new Date(dateString);
     const month = dateObject.getMonth() + 1; // Months are zero-indexed, so we add 1
@@ -238,7 +244,7 @@ export default function CollapsibleDailyTable() {
               </TableHead>
               <TableBody>
                 {rows
-                  .filter(row => !selectedMonth || getMonthFromDate(row.dayDate) === selectedMonth) // Filter by selected month
+                  .filter(row => !selectedMonth || getMonthFromDate(row.dayDate) === selectedMonth)
                   .map((row, index) => (
                     <Row key={index} row={row} />
                   ))}
@@ -250,3 +256,6 @@ export default function CollapsibleDailyTable() {
     </Grid>
   );
 }
+
+export default CollapsibleDailyTable;
+

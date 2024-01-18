@@ -114,42 +114,50 @@ export default function CollapsibleMonthlyTable() {
       month,
       totalOrders,
       totalDailySales,
-      history: [
-        {
-          product: 'nasi lemak',
-          productPrice: 5,
-          totalProductOrder: 3,
-        },
-        {
-          product: 'udang',
-          productPrice: 5,
-          totalProductOrder: 1,
-        },
-      ],
+      // history: [
+      //   {
+      //     product: 'nasi lemak',
+      //     productPrice: 5,
+      //     totalProductOrder: 3,
+      //   },
+      //   {
+      //     product: 'udang',
+      //     productPrice: 5,
+      //     totalProductOrder: 1,
+      //   },
+      // ],
     };
   }  
 
   function Row(props) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
+
+    // return (
+    //   <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+    //     <TableCell component="th" scope="row">{row.month}</TableCell>
+    //     <TableCell>{row.totalOrders}</TableCell>
+    //     <TableCell>{row.totalDailySales}</TableCell>
+    //   </TableRow>
+    // );
 
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
-            <IconButton
+            {/* <IconButton
               aria-label="expand row"
               size="small"
               onClick={() => setOpen(!open)}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
+            </IconButton> */}
           </TableCell>
           <TableCell component="th" scope="row">{row.month}</TableCell>
           <TableCell>{row.totalOrders}</TableCell>
           <TableCell>{row.totalDailySales}</TableCell>
         </TableRow>
-        <TableRow>
+        {/* <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
@@ -178,7 +186,7 @@ export default function CollapsibleMonthlyTable() {
               </Box>
             </Collapse>
           </TableCell>
-        </TableRow>
+        </TableRow> */}
       </React.Fragment>
     );
   }
@@ -188,13 +196,13 @@ export default function CollapsibleMonthlyTable() {
       month: PropTypes.string,
       totalOrders: PropTypes.number,
       totalDailySales: PropTypes.number,
-      history: PropTypes.arrayOf(
-        PropTypes.shape({
-          product: PropTypes.string.isRequired,
-          productPrice: PropTypes.number.isRequired,
-          totalProductOrder: PropTypes.number.isRequired,
-        }),
-      ).isRequired,
+      // history: PropTypes.arrayOf(
+      //   PropTypes.shape({
+      //     product: PropTypes.string.isRequired,
+      //     productPrice: PropTypes.number.isRequired,
+      //     totalProductOrder: PropTypes.number.isRequired,
+      //   }),
+      // ).isRequired,
     }).isRequired,
   };
 

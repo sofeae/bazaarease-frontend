@@ -1,0 +1,11 @@
+// //fetch real data
+//   useEffect(() => {
+//     fetchData();
+//   }, [user.token, selectedMonth]);
+
+//   // useEffect to fetch data (replace the existing fetchData function)
+//   // useEffect(() => {
+//   //   // Fetch data or use the generated dummy data
+//   //   const dummyData = generateDummyData();
+//   //   setRows(dummyData);
+//   // }, []);
