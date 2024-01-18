@@ -7,6 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useLogin } from '../../hooks/useLogin';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +16,9 @@ const Signup = () => {
   const [businessName, setBusinessName] = useState('');
   const [open, setOpen] = useState(false);
   const { signup, error, isLoading } = useSignup();
+  const {login} = useLogin()
   const navigate = useNavigate();
+  const {dispatch} = useAuthContext() 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +28,8 @@ const Signup = () => {
     setOpen(false);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    await login(email, password, businessName)
     navigate('/');
   };
 
@@ -34,8 +39,10 @@ const Signup = () => {
     try {
       const userData = await signup(email, password, businessName);
 
-      // Assuming dispatch comes from your context, make sure it's accessible here
-      // Dispatch the "LOGIN" action with user details, including businessName
+      
+      // console.log(userData)
+      // // Assuming dispatch comes from your context, make sure it's accessible here
+      // // Dispatch the "LOGIN" action with user details, including businessName
       // dispatch({
       //   type: "LOGIN",
       //   payload: {
