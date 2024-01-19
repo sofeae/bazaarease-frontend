@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { useAuthContext } from "../hooks/useAuthContext";
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 //import dialog
 import DialogActions from '@mui/material/DialogActions';
@@ -94,9 +95,13 @@ const OrderDetails = ({ orders, handleToggle }) => {
             fullWidth
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-              Order Details #{orders.queueNum}
+              <div>
+                Order Details #{orders.queueNum}
+              </div>
+              <div className="text-xs">
+                {orders.createdAt}
+              </div>
             </DialogTitle>
-
             <IconButton
               aria-label="close"
               onClick={handleClose}

@@ -38,20 +38,7 @@ const Signup = () => {
 
     try {
       const userData = await signup(email, password, businessName);
-
       
-      // console.log(userData)
-      // // Assuming dispatch comes from your context, make sure it's accessible here
-      // // Dispatch the "LOGIN" action with user details, including businessName
-      // dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     id: userData.id,
-      //     username: userData.username,
-      //     businessName: businessName,
-      //   },
-      // });
-
       // Open the success dialog
       handleClickOpen();
     } catch (error) {
