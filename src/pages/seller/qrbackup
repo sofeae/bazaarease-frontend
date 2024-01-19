@@ -1,0 +1,53 @@
+
+
+
+
+import Button from "../../components/elements/Button";
+import React, { useRef, useEffect } from "react";
+import QRCode from "qrcode.react";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { frontendBaseURL } from "../../utils/imageUrl";
+import jsPDF from 'jspdf';
+
+const QR = () => {
+  const { user } = useAuthContext();
+  const qrCodeSize = 250; // Adjust the size as needed
+  const qrCanvasRef = useRef();
+  const hiddenCanvasRef = useRef();
+
+  useEffect(() => {
+    if (qrCanvasRef.current && hiddenCanvasRef.current) {
+      const qrCanvas = qrCanvasRef.current._canvas;
+      const hiddenCanvas = hiddenCanvasRef.current;
+      const context = hiddenCanvas.getContext("2d");
+
+      context.clearRect(0, 0, qrCodeSize, qrCodeSize);
+      context.drawImage(qrCanvas, 0, 0, qrCodeSize, qrCodeSize);
+    }
+  }, [qrCodeSize]);
+
+  const downloadQRCode = () => {
+    const imgData = hiddenCanvasRef.current.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 10, 10, qrCodeSize, qrCodeSize);
+    pdf.save(`QRCode_${user.businessName}.pdf`);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-3xl font-bold mb-4">{user.businessName}</h1>
+      <div className="border border-black p-4 mb-4">
+        <QRCode
+          value={frontendBaseURL + `/Menu/${user.id}/CustomerPage`}
+          size={qrCodeSize}
+          ref={qrCanvasRef}
+        />
+        <canvas ref={hiddenCanvasRef} style={{ display: "none" }} />
+      </div>
+      <Button onClick={downloadQRCode}>Download QR Code</Button>
+    </div>
+  );
+};
+
+export default QR;
+

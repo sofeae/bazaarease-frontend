@@ -5,16 +5,16 @@ import CurrentOrder from "./CurrentOrder.jsx";
 import CompletedOrder from "./CompletedOrder.jsx";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useOrdersContext } from "../../hooks/useOrdersContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { backendBaseURL } from "../../utils/imageUrl";
 
 const Order = () => {
   const tabs = ['Current Order', 'Completed Order'];
   const [currentTab, handleTabSwitch] = UseOrderTabSwitch(tabs, 'Current Order');
-
   const { orders, dispatch } = useOrdersContext();
   const completedOrders = orders && orders.filter(order => order.status);
   const { user } = useAuthContext();
+  const [refreshInterval, setRefreshInterval] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -33,10 +33,18 @@ const Order = () => {
       }
     };
 
+    // Fetch orders initially
     if (user) {
       fetchOrders();
     }
-  }, [dispatch,user]);
+
+    // Set up interval to fetch orders every 3 seconds
+    const intervalId = setInterval(fetchOrders, 1000);
+    setRefreshInterval(intervalId);
+
+    // Clean up interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [dispatch, user]);
 
   console.log("orderjsx orders",orders)
 

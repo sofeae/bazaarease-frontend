@@ -18,14 +18,6 @@ const SalesManagement = () => {
         {/* Daily Page Content */}
         <div className={`tabs ${currentTab !== 'Daily' ? 'hidden' : ''}`}>
           <CollapsibleDailyTable />
-          {/* Download Button */}
-          {/* <div className="flex justify-end p-2 mt-4">
-            <button
-              className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
-              onClick={() => handleTabSwitch('Daily')}>
-              <span>Download</span>
-            </button>
-          </div> */}
         </div>
         {/* Monthly Page Content */}
         <div className={`tabs ${currentTab !== 'Monthly' ? 'hidden' : ''}`}>
