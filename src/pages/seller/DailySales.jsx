@@ -14,21 +14,29 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Button from '@mui/material/Button';  // Import Button component
 import { backendBaseURL } from '../../utils/imageUrl';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import SelectSmall from '../../components/MonthDropdown';
 import { format } from 'date-fns';
 import SelectYear from '../../components/DailyYearDropdown';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 function CollapsibleDailyTable() {
   const [rows, setRows] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState('');
-  const [selectedYear, setSelectedYear] = useState('');  // State for the selected year
+  const [selectedMonth, setSelectedMonth] = useState('01');
+  console.log('Selected Month:', selectedMonth);
+  const [selectedYear, setSelectedYear] = useState('2024');  // State for the selected year
+  console.log('Selected Year:', selectedYear)
   const { user } = useAuthContext();
+  const [downloadData, setDownloadData] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, [user.token, selectedMonth, selectedYear]);  // Include selectedYear in the dependency array
+
+  // ... (rest of the component)
 
   async function fetchData() {
     try {
@@ -60,10 +68,45 @@ function CollapsibleDailyTable() {
       console.log('Processed data:', processedData);
 
       setRows(processedData);
+      setDownloadData(processedData);  // Set the downloaded data
     } catch (error) {
       console.error('Error fetching data:', error);
       // Handle the error as needed
     }
+  }
+
+  function handleDownload() {
+    const filteredData = downloadData
+      .filter(row => (!selectedMonth || getMonthFromDate(row.dayDate) === selectedMonth) &&
+        (!selectedYear || new Date(row.dayDate).getFullYear() === parseInt(selectedYear)));
+
+    const pdf = new jsPDF();
+
+    // Set table headers
+    const headers = [['Date', 'Total Orders', 'Total Daily Sales']];
+
+    // Extract table data
+    const data = filteredData.map(row => [row.dayDate, row.totalOrders, `RM ${row.totalDailySales.toFixed(2)}`]);
+
+    // Set table layout
+    const tableConfig = {
+      startY: 40, // Adjust startY to make space for the title
+      head: headers,
+      body: data,
+      autoSize: true,
+      headStyles: { fillColor: [255, 214, 0], textColor: [0, 0, 0] },
+    };
+
+    // Display chosen year and month at the top
+    pdf.text(`Year: ${selectedYear || 'All'} | Month: ${selectedMonth || 'All'}`, 20, 20);
+
+    // Set title
+    // pdf.text('Downloaded Data', 20, 30);
+
+    // Generate table
+    pdf.autoTable(tableConfig);
+
+    pdf.save('downloaded_data.pdf');
   }
 
   function processOrders(orders) {
@@ -95,7 +138,7 @@ function CollapsibleDailyTable() {
 
     return groupedOrders;
   }
-  
+
   // Modify getUniqueProductNames function
   function getUniqueProductNames(orders) {
     const productNamesSet = new Set();
@@ -138,23 +181,23 @@ function CollapsibleDailyTable() {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-  
+
     // Sort and make product names non-redundant in history
     const sortedProductNames = [...new Set(row.history.flatMap(historyRow => historyRow.products.map(product => product.name)))];
-  
+
     // Sort product names based on total amount in descending order
     sortedProductNames.sort((productNameA, productNameB) => {
       const totalAmountA = row.history
         .filter(historyRow => historyRow.products.some(product => product.name === productNameA))
         .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productNameA).amount, 0);
-  
+
       const totalAmountB = row.history
         .filter(historyRow => historyRow.products.some(product => product.name === productNameB))
         .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productNameB).amount, 0);
-  
+
       return totalAmountB - totalAmountA;
     });
-  
+
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -190,7 +233,7 @@ function CollapsibleDailyTable() {
                         .filter(historyRow => historyRow.products.some(product => product.name === productName))
                         .reduce((total, historyRow) => total + historyRow.products.find(product => product.name === productName).amount, 0);
                       const totalProductSales = totalAmount * productData.price;
-  
+
                       return (
                         <TableRow key={index}>
                           <TableCell>{productName}</TableCell>
@@ -208,20 +251,20 @@ function CollapsibleDailyTable() {
         </TableRow>
       </React.Fragment>
     );
-  }  
-  
+  }
+
   Row.propTypes = {
     row: PropTypes.shape({
-      dayDate: PropTypes.string.isRequired,
+      dayDate: PropTypes.string,
       totalOrders: PropTypes.number,
       totalDailySales: PropTypes.number,
       productNames: PropTypes.arrayOf(PropTypes.string),
       history: PropTypes.arrayOf(
         PropTypes.shape({
-          product: PropTypes.string.isRequired,
-          productPrice: PropTypes.number.isRequired,
-          totalProductOrder: PropTypes.number.isRequired,
-          totalProductSales: PropTypes.number.isRequired,
+          product: PropTypes.string,
+          productPrice: PropTypes.number,
+          totalProductOrder: PropTypes.number,
+          totalProductSales: PropTypes.number,
         })
       ).isRequired,
     }).isRequired,
@@ -236,8 +279,8 @@ function CollapsibleDailyTable() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <div className="flex space-x-2">  {/* Use a flex container to align the dropdowns */}
-          <SelectYear onYearChange={setSelectedYear} /> {/* Add your year dropdown component */}
+        <div className="flex space-x-2">
+          <SelectYear onYearChange={setSelectedYear} />
           <SelectSmall onMonthChange={setSelectedMonth} />
         </div>
         <Paper className="m-2">
@@ -254,7 +297,7 @@ function CollapsibleDailyTable() {
               <TableBody>
                 {rows
                   .filter(row => (!selectedMonth || getMonthFromDate(row.dayDate) === selectedMonth) &&
-                                (!selectedYear || new Date(row.dayDate).getFullYear() === parseInt(selectedYear)))
+                    (!selectedYear || new Date(row.dayDate).getFullYear() === parseInt(selectedYear)))
                   .map((row, index) => (
                     <Row key={index} row={row} />
                   ))}
@@ -262,6 +305,11 @@ function CollapsibleDailyTable() {
             </Table>
           </TableContainer>
         </Paper>
+        <div className="grid grid-cols-1 justify-items-end">
+          <button className="bg-yellow-500 text-black mt-4 mb-4 mr-4 px-4 py-2 rounded" onClick={handleDownload}>
+            Download PDF
+          </button>
+        </div>
       </Grid>
     </Grid>
   );

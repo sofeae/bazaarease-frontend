@@ -14,46 +14,86 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Button from '@mui/material/Button'; // Import Button component
 import { backendBaseURL } from "../../utils/imageUrl";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function CollapsibleMonthlyTable() {
   const [rows, setRows] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Step 1
   const { user } = useAuthContext();
 
-  // Function to generate dummy data
-  function generateDummyData() {
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-
-    return months.map(month => {
-      return createData(month, Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 1000) + 1);
-    });
-  }
-
-  //useEffect for real data
   useEffect(() => {
     fetchData();
-  }, [user.token]);
+  }, [user.token, selectedYear]); // Step 5
+  
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        backendBaseURL + `/api/order?year=${selectedYear}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-  //useEffect dummy data
-  // useEffect(() => {
-  //   const dummyData = generateDummyData();
-  //   setRows(dummyData);
-  // }, []);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data. Status: ${response.status}`);
+      }
 
-  // Function to group orders by month
+      const orders = await response.json();
+
+      if (!Array.isArray(orders)) {
+        throw new Error('Invalid response format. Expected an array.');
+      }
+
+      const filteredOrders = orders.filter(
+        (order) => new Date(order.createdAt).getFullYear() === selectedYear
+      );
+
+      const processedData = processOrders(filteredOrders);
+
+      setRows(processedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle the error as needed
+    }
+  }
+  
+  function handleYearChange(event) {
+    setSelectedYear(parseInt(event.target.value, 10)); // Step 4
+  }
+
+  function processOrders(orders) {
+    const groupedOrders = groupOrdersByMonth(orders);
+
+    const processedData = Object.entries(groupedOrders).map(([month, orders]) => {
+      const totalDailySales = orders.reduce((total, order) => total + order.totalAmount, 0);
+
+      return createData(month, orders.length, totalDailySales);
+    });
+
+    return processedData;
+  }
+
   function groupOrdersByMonth(orders) {
     const groupedOrders = {};
 
     orders
-      .filter(order => order.status === true) // Filter orders with status true
+      .filter(order => order.status === true && new Date(order.createdAt).getFullYear() === selectedYear)
       .forEach(order => {
         const month = new Date(order.createdAt).toLocaleDateString(undefined, {
           month: 'long',
-          year: 'numeric',
+          // year: 'numeric',
         });
 
         if (!groupedOrders[month]) {
@@ -66,127 +106,25 @@ export default function CollapsibleMonthlyTable() {
     return groupedOrders;
   }
 
-  // Function to process orders and calculate totalDailySales for each month
-  function processOrders(orders) {
-    const groupedOrders = groupOrdersByMonth(orders);
-
-    const processedData = Object.entries(groupedOrders).map(([month, orders]) => {
-      // Calculate totalDailySales by summing up totalAmount of all orders in the same month
-      const totalDailySales = orders.reduce((total, order) => total + order.totalAmount, 0);
-
-      return createData(month, orders.length, totalDailySales);
-    });
-
-    return processedData;
-  }
-
-  async function fetchData() {
-    try {
-      const response = await fetch(backendBaseURL + "/api/order", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch data. Status: ${response.status}`);
-      }
-
-      const orders = await response.json();
-
-      if (!Array.isArray(orders)) {
-        throw new Error('Invalid response format. Expected an array.');
-      }
-
-      const processedData = processOrders(orders);
-
-      setRows(processedData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // Handle the error as needed
-    }
-  }
-
   function createData(month, totalOrders, totalDailySales) {
     return {
       month,
       totalOrders,
       totalDailySales,
-      // history: [
-      //   {
-      //     product: 'nasi lemak',
-      //     productPrice: 5,
-      //     totalProductOrder: 3,
-      //   },
-      //   {
-      //     product: 'udang',
-      //     productPrice: 5,
-      //     totalProductOrder: 1,
-      //   },
-      // ],
     };
-  }  
+  }
 
   function Row(props) {
     const { row } = props;
-    // const [open, setOpen] = React.useState(false);
-
-    // return (
-    //   <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-    //     <TableCell component="th" scope="row">{row.month}</TableCell>
-    //     <TableCell>{row.totalOrders}</TableCell>
-    //     <TableCell>{row.totalDailySales}</TableCell>
-    //   </TableRow>
-    // );
 
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell>
-            {/* <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton> */}
-          </TableCell>
+          <TableCell></TableCell>
           <TableCell component="th" scope="row">{row.month}</TableCell>
           <TableCell>{row.totalOrders}</TableCell>
-          <TableCell>{row.totalDailySales}</TableCell>
+          <TableCell>RM {row.totalDailySales.toFixed(2)}</TableCell>
         </TableRow>
-        {/* <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Products</TableCell>
-                      <TableCell>Product Price</TableCell>
-                      <TableCell align="left">Total Product Ordered</TableCell>
-                      <TableCell align="left">Total Product Sales</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {row.history.map((historyRow, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{historyRow.product}</TableCell>
-                        <TableCell align="left">{historyRow.productPrice}</TableCell>
-                        <TableCell align="left">{historyRow.totalProductOrder}</TableCell>
-                        <TableCell align="left">
-                          {Math.round(historyRow.totalProductOrder * historyRow.productPrice)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow> */}
       </React.Fragment>
     );
   }
@@ -196,19 +134,54 @@ export default function CollapsibleMonthlyTable() {
       month: PropTypes.string,
       totalOrders: PropTypes.number,
       totalDailySales: PropTypes.number,
-      // history: PropTypes.arrayOf(
-      //   PropTypes.shape({
-      //     product: PropTypes.string.isRequired,
-      //     productPrice: PropTypes.number.isRequired,
-      //     totalProductOrder: PropTypes.number.isRequired,
-      //   }),
-      // ).isRequired,
     }).isRequired,
   };
+
+  function handleDownload() {
+    const pdf = new jsPDF();
+
+    const headers = [['Month', 'Total Orders', 'Total Monthly Sales']];
+    const data = rows.map(row => [row.month, row.totalOrders, `RM ${row.totalDailySales.toFixed(2)}`]);
+
+    const tableConfig = {
+      startY: 40,
+      head: headers,
+      body: data,
+      autoSize: true,
+      headStyles: { fillColor: [255, 214, 0], textColor: [0, 0, 0] },
+    };
+
+    pdf.text(`Business: ${user.businessName}`, 20, 20);
+    pdf.autoTable(tableConfig);
+
+    const filename = `${user.businessName}_monthly_data.pdf`;
+
+    pdf.save(filename);
+  }
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
+      <div className="flex items-center space-x-4 m-4" style={{ marginLeft: '0px' }}>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="year-select-label">Year</InputLabel>
+              <Select
+                labelId="year-select-label"
+                id="year-select"
+                value={selectedYear}
+                label="Year"
+                onChange={handleYearChange}
+              >
+                {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(
+                  (year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            </FormControl>
+          </div>
         <Paper className="m-2">
           <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -228,6 +201,11 @@ export default function CollapsibleMonthlyTable() {
             </Table>
           </TableContainer>
         </Paper>
+        <div className="grid grid-cols-1 justify-items-end">
+          <button className="bg-yellow-500 text-black mt-4 mb-4 mr-4 px-4 py-2 rounded" onClick={handleDownload}>
+            Download PDF
+          </button>
+        </div>
       </Grid>
     </Grid>
   );
