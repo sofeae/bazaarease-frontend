@@ -53,12 +53,13 @@ const PaymentForm = () => {
           card: card,
         })
       })
-      const { queueNum, paymentStatus } = await response.json()
-      console.log(queueNum, paymentStatus)
+      const { queueNum, paymentStatus, order } = await response.json()
+      console.log(queueNum, paymentStatus, order);
+
       if (paymentStatus == "paid") {
         // dispatch(clearAddress());
         dispatch(clearCart());
-        navigate('payment-success', { state: { queueNum: queueNum } });
+        navigate('payment-success', { state: { queueNum: queueNum, order: order } });
       }
     } catch (err) {
       console.log(err);

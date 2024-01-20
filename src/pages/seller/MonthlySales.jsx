@@ -151,18 +151,31 @@ export default function CollapsibleMonthlyTable() {
       headStyles: { fillColor: [255, 214, 0], textColor: [0, 0, 0] },
     };
 
-    pdf.text(`Business: ${user.businessName}`, 20, 20);
+    // Set title at the center
+    const titleText = 'Daily Sales Report';
+    const titleWidth = pdf.getStringUnitWidth(titleText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+    const titleX = (pdf.internal.pageSize.getWidth() - titleWidth) / 2;
+    pdf.text(titleText, titleX, 20);
+
+    // Set smaller year and month text
+    const textSize = 13;
+    pdf.setFontSize(textSize);
+    const selectedText = `${user.businessName}: ${selectedYear || 'All'} `;
+    const selectedTextWidth = pdf.getStringUnitWidth(selectedText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+    const selectedTextX = (pdf.internal.pageSize.getWidth() - selectedTextWidth) / 2;
+    pdf.text(selectedText, selectedTextX, 30);
+
+    // Generate table
     pdf.autoTable(tableConfig);
 
-    const filename = `${user.businessName}_monthly_data.pdf`;
-
-    pdf.save(filename);
+    //save file name in pdf
+    pdf.save(`${user.businessName}_${selectedYear}_monthly_sales_report.pdf`);
   }
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-      <div className="flex items-center space-x-4 m-4" style={{ marginLeft: '0px' }}>
+      <div className="flex space-x-2">
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="year-select-label">Year</InputLabel>
               <Select
@@ -172,7 +185,7 @@ export default function CollapsibleMonthlyTable() {
                 label="Year"
                 onChange={handleYearChange}
               >
-                {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(
+                {Array.from({ length: 4 }, (_, i) => new Date().getFullYear() - i).map(
                   (year) => (
                     <MenuItem key={year} value={year}>
                       {year}

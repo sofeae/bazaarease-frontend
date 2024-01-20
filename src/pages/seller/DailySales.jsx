@@ -36,8 +36,6 @@ function CollapsibleDailyTable() {
     fetchData();
   }, [user.token, selectedMonth, selectedYear]);  // Include selectedYear in the dependency array
 
-  // ... (rest of the component)
-
   async function fetchData() {
     try {
       const response = await fetch(`${backendBaseURL}/api/order`, {
@@ -98,16 +96,35 @@ function CollapsibleDailyTable() {
     };
 
     // Display chosen year and month at the top
-    pdf.text(`Year: ${selectedYear || 'All'} | Month: ${selectedMonth || 'All'}`, 20, 20);
+    const selectedMonthName = selectedMonth ? new Date(2000, parseInt(selectedMonth) - 1, 1).toLocaleString('en-US', { month: 'long' }) : 'All';
+    // pdf.text(`Year: ${selectedYear || 'All'} | Month: ${selectedMonthName}`, 20, 30);
 
-    // Set title
-    // pdf.text('Downloaded Data', 20, 30);
+    // Set title at the center
+    const titleText = 'Daily Sales Report';
+    const titleWidth = pdf.getStringUnitWidth(titleText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+    const titleX = (pdf.internal.pageSize.getWidth() - titleWidth) / 2;
+    pdf.text(titleText, titleX, 20);
+
+    // Set smaller year and month text
+    const textSize = 12;
+    pdf.setFontSize(textSize);
+    const selectedText = `${user.businessName}: ${selectedMonthName} ${selectedYear || 'All'} `;
+    const selectedTextWidth = pdf.getStringUnitWidth(selectedText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+    const selectedTextX = (pdf.internal.pageSize.getWidth() - selectedTextWidth) / 2;
+    pdf.text(selectedText, selectedTextX, 30);
 
     // Generate table
     pdf.autoTable(tableConfig);
 
-    pdf.save('downloaded_data.pdf');
-  }
+    // Assuming user contains the business name
+    const businessName = user.businessName || 'UnknownBusiness';
+    
+    // Format selectedMonth to always be two digits
+    // const formattedMonth = selectedMonth ? selectedMonth.padStart(2, '0') : 'All';
+
+    // Save PDF with the specified filename
+    pdf.save(`${businessName}_${selectedMonthName}_${selectedYear}_sales_report.pdf`);
+}
 
   function processOrders(orders) {
     const groupedOrders = groupOrdersByDate(orders);

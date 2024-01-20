@@ -1,22 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Alert } from '../../components/elements/Alert';
 import queue from '../../assets/images/queue.png';
-import { useOrdersContext } from '../../hooks/useOrdersContext'; // Import the context
+import { backendBaseURL } from "../../utils/imageUrl.js";
 
 const PaymentSuccessPage = () => {
   const { queueNum } = useLocation().state;
-  const { orders, fetchOrders } = useOrdersContext(); 
+  const order = useLocation().state?.order; // Check if order is defined
+  const [status,setStatus] = useState(false)
 
-  // Find the order with the corresponding queue number
-  const order = orders ? orders.find((order) => order.queueNum === queueNum) : null;
-
-  // Log orders status to the console
+  // Log orders data to the console
   useEffect(() => {
-    if (order) {
-      console.log('Order Status:', order.status);
-    }
-  }, [order]);
+      const interval = setInterval(async ()=>{
+        const response = await fetch(backendBaseURL+ `/api/order/${order._id}`) //Get order by order id
+        const result = await response.json()
+        // console.log("result",result)
+        // console.log("order:",order)
+        setStatus(result.status)
+        console.log("status:",status)
+      },5000) //5000 = 5 seconds
+    return () => clearInterval(interval)
+  }, []);
+
+
   return (
     <div className="flex flex-col items-center justify-top h-screen">
       <Alert variant="success" className="mb-4 mt-10 bg-yellow-300">
@@ -28,13 +34,10 @@ const PaymentSuccessPage = () => {
           Your Queue Number: <br /> <br />
           <span className="font-bold text-5xl"> #{queueNum}</span>
         </div>
-        
-        {/* Display order status if order is found */}
-        {order && (
-          <div className="rounded-lg text-xl text-center text-black mb-4">
-            Order Status: {order.status}
-          </div>
-        )}
+        <div className="rounded-lg text-xl text-center mb-4">
+          Status: <br /> <br />
+          <span className="font-bold text-5xl"> {status ? "Completed" : "Incomplete"}</span>
+        </div>
       </div>
     </div>
   );

@@ -22,13 +22,21 @@ const MenuForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Validate that the image field is not empty
+    if (!image) {
+      setError("Please fill in all the fields");
+      setEmptyFields(["image"]);
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("name", name);
     formData.append("desc", desc);
     formData.append("price", price);
     formData.append("availability", true); // Set default availability
     formData.append("image", image);
-
+  
     try {
       const response = await fetch(backendBaseURL + "/api/menus", {
         method: "POST",
@@ -37,12 +45,12 @@ const MenuForm = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create menu");
       }
-
+  
       const json = await response.json();
       setName("");
       setDesc("");
@@ -95,7 +103,7 @@ const MenuForm = () => {
           onChange={onImageChange}
           className={`mb-2 p-2 w-full ${emptyFields.includes("image") ? "error" : ""}`}
         />
-        <p className="text-sm text-gray-500">(Image must be in .png format)</p>
+        <p className="text-sm text-gray-500">(Image must be in .png or .jpg format)</p>
         <button className="bg-yellow-500 text-white px-4 py-2 rounded mt-6">Add Product</button>
         {error && <div className="error mt-2">{error}</div>}
       </form>

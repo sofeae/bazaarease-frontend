@@ -16,9 +16,9 @@ const Signup = () => {
   const [businessName, setBusinessName] = useState('');
   const [open, setOpen] = useState(false);
   const { signup, error, isLoading } = useSignup();
-  const {login} = useLogin()
+  const { login } = useLogin();
   const navigate = useNavigate();
-  const {dispatch} = useAuthContext() 
+  const { dispatch } = useAuthContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,20 +29,26 @@ const Signup = () => {
   };
 
   const handleLogin = async () => {
-    await login(email, password)
+    await login(email, password);
     navigate('/');
   };
+
+  // State to track signup errors
+  const [hasError, setHasError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const userData = await signup(email, password, businessName);
-      
-      // Open the success dialog
-      handleClickOpen();
+
+      // Open the success dialog only if userData is truthy
+      if (userData) {
+        handleClickOpen();
+      }
     } catch (error) {
       // Handle signup error
+      setHasError(true);
     }
   };
 
@@ -67,6 +73,7 @@ const Signup = () => {
         className="mb-2 p-2 w-full"
         autoComplete="new-password"
       />
+      <p className="text-xs text-gray-400 mb-2">Strong password should contain (A-Z), (a-z), (0-9), and any one of (!@#$%^&*)</p>
 
       <label className="mb-2">Business Name:</label>
       <input
@@ -77,11 +84,13 @@ const Signup = () => {
         autoComplete="new-business-name"
       />
 
+      {error && <div className="error">{error}</div>}
+
       <React.Fragment>
         <button
           className="bg-yellow-500 text-white px-4 py-2 rounded mb-4"
-          disabled={isLoading}
-          onClick={handleClickOpen}
+          disabled={isLoading || hasError} // Disable the button if isLoading or hasError is true
+          onClick={handleClickOpen} // Trigger handleSubmit instead of handleClickOpen
         >
           Sign up
         </button>
@@ -102,8 +111,6 @@ const Signup = () => {
           </DialogActions>
         </Dialog>
       </React.Fragment>
-
-      {error && <div className="error">{error}</div>}
     </form>
   );
 };
