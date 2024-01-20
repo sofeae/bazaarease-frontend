@@ -18,7 +18,7 @@ const PaymentSuccessPage = () => {
         // console.log("order:",order)
         setStatus(result.status)
         console.log("status:",status)
-      },5000) //5000 = 5 seconds
+      },1000) //1000 = 1 seconds
     return () => clearInterval(interval)
   }, []);
 
@@ -32,11 +32,11 @@ const PaymentSuccessPage = () => {
       <div className="max-w-lg mx-auto p-4">
         <div className="rounded-lg text-xl text-center mb-4">
           Your Queue Number: <br /> <br />
-          <span className="font-bold text-5xl"> #{queueNum}</span>
+          <span className="font-bold text-6xl"> #{queueNum}</span>
         </div>
-        <div className="rounded-lg text-xl text-center mb-4">
-          Status: <br /> <br />
-          <span className="font-bold text-5xl"> {status ? "Completed" : "Incomplete"}</span>
+        <div className="rounded-lg text-lg text-center mb-4">
+          Status: 
+          <span className="font text-lg"> {status ? "Order is ready!" : "Preparing..."}</span>
         </div>
       </div>
     </div>

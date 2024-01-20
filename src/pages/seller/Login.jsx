@@ -42,15 +42,6 @@ const Login = () => {
         value={password}
         className="mb-6 p-2 w-full"
       />
-
-      {/* <label className="mb-2">Business Name:</label>
-      <input
-        type="text" // Corrected the input type for businessName
-        onChange={(e) => setBusinessName(e.target.value)}
-        value={businessName}
-        className="mb-4 p-2 w-full"
-      /> */}
-
       <button disabled={isLoading} className="bg-yellow-500 text-white px-4 py-2 rounded mb-2">
         Log in
       </button>

@@ -20,7 +20,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 const MenuDetails = ({ menu }) => {
   const { dispatch } = useMenusContext();
   const { user } = useAuthContext();
-
   const [checked, setChecked] = useState(menu.availability);
 
   const handleChange = async () => {

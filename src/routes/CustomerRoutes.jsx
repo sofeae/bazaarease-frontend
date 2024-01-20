@@ -13,7 +13,6 @@ export default function CustomerRoutes() {
         <Route path="CustomerPage" element={<CustomerPage />} />
         <Route path="Cart" element={<CartPage />}/>
         <Route path="Cart/payment-success" element={<PaymentSuccessPage />}/>
-
       </Route>
     </Routes> 
   );

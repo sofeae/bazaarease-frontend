@@ -9,6 +9,7 @@ import RequireAuth from "./components/RequireAuth";
 import CustomerRoutes from "./routes/CustomerRoutes";
 import Signup from "./pages/seller/Signup";
 import EditProfile from "./pages/seller/EditProfile";
+import PageError from "./pages/customer/PageError";
 
 function App() {
   return (
@@ -18,11 +19,11 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/Menu/:userId/*" element={<CustomerRoutes />} />
-
           <Route element={<RootLayout />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/EditProfile" element={<EditProfile/>}/>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/PageError" element={<PageError />} />
             <Route
               path="/seller/*"
               element={
