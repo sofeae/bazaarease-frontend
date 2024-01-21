@@ -68,7 +68,7 @@ const MenuForm = () => {
   return (
     <div className="sticky top-24">
       <form className="create" onSubmit={handleSubmit}>
-        <h3 className="mt-2 mb-5 text-2xl font-bold">Add New Product</h3>
+        <h3 className="mt-8 mb-5 text-2xl font-bold">Add New Product</h3>
 
         <label className="mb-2">Menu Name:</label>
         <input

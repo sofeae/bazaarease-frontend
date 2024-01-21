@@ -99,7 +99,7 @@ const OrderDetails = ({ orders, handleToggle }) => {
                 Order Details #{orders.queueNum}
               </div>
               <div className="text-xs">
-                {orders.createdAt}
+                {new Date(orders.createdAt).toLocaleString()}
               </div>
             </DialogTitle>
             <IconButton
@@ -155,26 +155,16 @@ const OrderDetails = ({ orders, handleToggle }) => {
               {/* Conditionally render content based on the current status */}
               <Typography gutterBottom>
                 {orders.status ?
-                  'Are you sure you want to change the order status to incomplete?' :
+                  'This order is already completed!' :
                   'Are you sure the order is completed?'}
               </Typography>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseConfirm}>Cancel</Button>
-              <Button onClick={handleConfirm}>Confirm</Button>
+              {/* Conditionally render "Cancel" and "Confirm" buttons */}
+              {!orders.status && <Button onClick={handleCloseConfirm}>Cancel</Button>}
+              {!orders.status && <Button onClick={handleConfirm}>Confirm</Button>}
             </DialogActions>
           </Dialog>
-
-          {/* <ToggleButton
-            value="check"
-            selected={orders.status}
-            onChange={() => {
-              handleChange()
-            }}
-            style={{ padding: '4px', width: '24px', height: '24px' }}
-          >
-            <CheckIcon style={{ fontSize: '20px' }} />
-          </ToggleButton> */}
         </span>
       </div>
       <p>

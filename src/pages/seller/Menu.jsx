@@ -12,7 +12,7 @@ import { backendBaseURL } from "../../utils/imageUrl";
 
 const Menu = () => {
   const { menus, dispatch } = useMenusContext();
-  const { user,dispatch: authDispatch } = useAuthContext();
+  const { user, dispatch: authDispatch } = useAuthContext();
 
   // Load storeStatus from localStorage or default to true
   const [storeStatus, setStoreStatus] = useState(false);
@@ -20,31 +20,31 @@ const Menu = () => {
   //TEMPLATE untuk fetch data masa load page.
   //1. IMPORT useEffect
   //2. GUNA useEffect
-// useEffect(()=>{
+  // useEffect(()=>{
 
-// },[])
-
-
-// || STORE STATUS SECTION
-// 1. RETRIEVE STORE STATUS
-// 2. DISPLAY STORE STATUS IN JSX
-// 3. CHANGE STORE STATUS
-
-//1.RETRIEVE STORE STATUS: fetch storeStatus from database during load. To get latest data
-useEffect(()=>{
-  const fetchStoreStatus = async () => {
-    // FETCH Store status by user ID. User id from AuthContext.
-    const response = await fetch(backendBaseURL + `/api/user/get-store-status/${user.id}`, {
-    });
-    const {storeStatus} = await response.json();
-
-    setStoreStatus(storeStatus);
-  };
-  fetchStoreStatus();
-},[])
+  // },[])
 
 
-//3.CHANGE STORE STATUS : patch storestatus in backend
+  // || STORE STATUS SECTION
+  // 1. RETRIEVE STORE STATUS
+  // 2. DISPLAY STORE STATUS IN JSX
+  // 3. CHANGE STORE STATUS
+
+  //1.RETRIEVE STORE STATUS: fetch storeStatus from database during load. To get latest data
+  useEffect(() => {
+    const fetchStoreStatus = async () => {
+      // FETCH Store status by user ID. User id from AuthContext.
+      const response = await fetch(backendBaseURL + `/api/user/get-store-status/${user.id}`, {
+      });
+      const { storeStatus } = await response.json();
+
+      setStoreStatus(storeStatus);
+    };
+    fetchStoreStatus();
+  }, [])
+
+
+  //3.CHANGE STORE STATUS : patch storestatus in backend
   const handleToggle = async (event) => {
     if (!user) {
       return;
@@ -59,23 +59,23 @@ useEffect(()=>{
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({newStatus: event.target.checked}),
+        body: JSON.stringify({ newStatus: event.target.checked }),
       });
 
-      const {storeStatus} = await response.json(); // Get the response text for debugging
-      if(response.ok){
+      const { storeStatus } = await response.json(); // Get the response text for debugging
+      if (response.ok) {
         setStoreStatus(storeStatus);
-        authDispatch({ type: "UPDATE_STORE_STATUS", payload: {storeStatus} });
+        authDispatch({ type: "UPDATE_STORE_STATUS", payload: { storeStatus } });
       }
+    }
+    catch (error) {
+
+    };
   }
-  catch(error){
 
-  };
-}
-
- // -------------------------------------------------------------------------------
+  // -------------------------------------------------------------------------------
   // || MENU SECTION
-  
+
   //FETCH MENUS MASA PAGE TENGAH LOADING
   useEffect(() => {
     const fetchMenus = async () => {
@@ -130,11 +130,11 @@ useEffect(()=>{
       <div className={style["menu-container"]}>
         <div className="flex flex-col w-2/5 gap-4">
           <div className="flex items-center justify-between">
-            <div className="ml-4 font-bold">
+            <div className="ml-4 mt-8 font-bold">
               Is your store opening today?
             </div>
-
             <Switch
+              className="mt-8"
               checked={storeStatus}
               onChange={handleToggle}
               inputProps={{ 'aria-label': 'controlled' }}

@@ -32,31 +32,3 @@ const CompletedOrder = ({completedOrders}) => {
 
 export default CompletedOrder;
 
-
-  // const { orders, dispatch } = useOrdersContext();
-  // const { user } = useAuthContext();
-
-  // useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     const response = await fetch(backendBaseURL + "/api/order/completed", {
-  //       method: "GET",
-  //       headers: { 
-  //         Authorization: `Bearer ${user.token}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-  //     const json = await response.json();
-  //     console.log("Completed Orders:",json);
-
-  //     if (response.ok) {
-  //       dispatch({ type: "SET_ORDERS", payload: json });
-  //     }
-  //   };
-
-  //   if (user) {
-  //     fetchOrders();
-  //   }
-  // }, [dispatch, user]);
-
-  // Check if orders is not null before applying filter
-  // const completedOrders = orders && orders.filter(order => order.status);

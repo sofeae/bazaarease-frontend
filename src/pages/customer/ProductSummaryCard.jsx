@@ -42,8 +42,6 @@ export const ProductsSummaryCard = ({ product, index }) => {
                 </div>
                 <div className="total-price">{`Total: RM ${totalPrice}`}</div>
             </div>
-
         </div>
-
     );
 }

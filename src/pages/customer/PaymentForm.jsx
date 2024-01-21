@@ -68,71 +68,63 @@ const PaymentForm = () => {
   }
 
   // export default function PaymentForm() {
-  return (
-    <form className="md:-2/3 md:mx-auto px-2 pt-1" id="payment-form" onSubmit={handleSubmit}>
-      <label className="pt-4 text-xs">*Only payment by card is accepted</label>
-      <label className="pt-4 text-xl text-bold md:text-center">Please enter your card details</label>
-      <React.Fragment>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              required
-              id="cardName"
-              label="Name on card"
-              fullWidth
-              autoComplete="cc-name"
-              variant="standard"
-            />
+    return (
+      <form className="md:-2/3 md:mx-auto px-2 pt-1" id="payment-form" onSubmit={handleSubmit}>
+        <label className="pt-4 text-xs">*Only payment by card is accepted</label>
+        <label className="pt-4 text-xl text-bold md:text-center">Please enter your card details</label>
+        <React.Fragment>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="cardName"
+                label="Name on card"
+                fullWidth
+                autoComplete="cc-name"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="cardNumber"
+                label="Card number"
+                fullWidth
+                autoComplete="cc-number"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="expDate"
+                label="Expiry date"
+                fullWidth
+                autoComplete="cc-exp"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="cvv"
+                label="CVV"
+                helperText="Last three digits on signature strip"
+                fullWidth
+                autoComplete="cc-csc"
+                variant="standard"
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              required
-              id="cardNumber"
-              label="Card number"
-              fullWidth
-              autoComplete="cc-number"
-              variant="standard"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              required
-              id="expDate"
-              label="Expiry date"
-              fullWidth
-              autoComplete="cc-exp"
-              variant="standard"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              required
-              id="cvv"
-              label="CVV"
-              helperText="Last three digits on signature strip"
-              fullWidth
-              autoComplete="cc-csc"
-              variant="standard"
-            />
-          </Grid>
-          {/* <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-              label="Remember credit card details for next time"
-            />
-          </Grid> */}
-        </Grid>
-      </React.Fragment>
-      <div className="bg-yellow-500 flex justify-center p-1 mt-4 rounded">
-        <Button type="submit" disabled={loading}>
-          {
-            loading ?
-              'Loading...' :
-              'Pay Now'
-          }
-        </Button>
-      </div>
-    </form>
-  )
-};
+        </React.Fragment>
+        <div className="flex justify-end mt-4">
+          {/* Add any necessary styling to the form container */}
+          <div className="bg-yellow-500 text-white py-1 px-2 rounded">
+            <Button type="submit" disabled={loading} className="px-3 py-1 mr-2 font-normal text-md">
+              {loading ? 'Loading...' : 'Pay Now'}
+            </Button>
+          </div>
+        </div>
+      </form>
+    );
+  };    
