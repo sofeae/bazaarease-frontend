@@ -33,6 +33,7 @@ const Login = () => {
         onChange={(e) => setEmail(e.target.value)}
         value={email}
         className="mb-2 p-2 w-full"
+        autoComplete="new-email"
       />
 
       <label className="mb-2">Password:</label>
@@ -41,6 +42,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
         className="mb-6 p-2 w-full"
+        autoComplete="new-email"
       />
       <button disabled={isLoading} className="bg-yellow-500 text-white px-4 py-2 rounded mb-2">
         Log in
@@ -49,8 +51,11 @@ const Login = () => {
 
       {/* Add a Link to the Sign Up page */}
       <p className="mt-2">
-        Don't have an account? <Link to="/Signup">Sign Up</Link>
-      </p>
+      Don't have an account?{" "}
+      <Link to="/Signup" className="text-yellow-600 underline">
+        Sign Up
+      </Link>
+    </p>
     </form>
   );
 };

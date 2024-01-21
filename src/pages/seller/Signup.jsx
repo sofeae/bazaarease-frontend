@@ -90,7 +90,7 @@ const Signup = () => {
         <button
           className="bg-yellow-500 text-white px-4 py-2 rounded mb-4"
           disabled={isLoading || hasError} // Disable the button if isLoading or hasError is true
-          onClick={handleClickOpen} // Trigger handleSubmit instead of handleClickOpen
+          onClick={handleSubmit} // Trigger handleSubmit instead of handleClickOpen
         >
           Sign up
         </button>
