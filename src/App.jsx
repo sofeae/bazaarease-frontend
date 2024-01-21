@@ -16,14 +16,13 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="/PageError" element={<PageError />} /> {/* Move PageError outside RootLayout */}
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/Menu/:userId/*" element={<CustomerRoutes />} />
           <Route element={<RootLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/EditProfile" element={<EditProfile />} />
-            <Route path="/PageError" element={<PageError />} />
             <Route
               path="/seller/*"
               element={
@@ -33,6 +32,7 @@ function App() {
               }
             />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </div>

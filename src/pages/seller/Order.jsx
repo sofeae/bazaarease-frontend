@@ -40,7 +40,7 @@ const Order = () => {
     }
 
     // Set up interval to fetch orders every 3 seconds
-    const intervalId = setInterval(fetchOrders, 1000);
+    const intervalId = setInterval(fetchOrders, 3000);
     setRefreshInterval(intervalId);
 
     // Clean up interval when the component is unmounted
