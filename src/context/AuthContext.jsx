@@ -8,6 +8,8 @@ function authReducer(state, action) {
       return { user: action.payload };
     case "LOGOUT":
       return { user: null };
+    case "UPDATE_STORE_STATUS":
+      return {user:{...state.user,storeStatus: action.payload.storeStatus}}
     default:
       return state;
   }
