@@ -56,7 +56,7 @@ export const ProductPreviewCard = ({ product, onAddProduct }) => {
         />
       </div>
       <h1 className="text-lg">{product.name}</h1>
-      <h2 className="pb-2 text-lg">RM {product.price}</h2>
+      <h2 className="pb-2 text-lg">RM {product.price.toFixed(2)}</h2>
       <p className={style.scrollbar + " " + 'text-sm mb-2 h-20 overflow-y-auto line-clamp-4 hide-scrollbar'}>
         {product.desc}
       </p>

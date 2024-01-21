@@ -34,13 +34,13 @@ export const ProductsSummaryCard = ({ product, index }) => {
             </div>
 
             <div className="product-price-qt flex flex-col items-center justify-center ml-auto">
-                <div className="price">{`RM ${product.price}`}</div>
+                <div className="price">{`RM ${product.price.toFixed(2)}`}</div>
                 <div className="quantity flex">
                     <button className="p-1" disabled={product.amount <= 0} onClick={() => { handleDecrement(index) }}>-</button>
                     <span className="p-1">{product.amount}</span>
                     <button className="p-1" onClick={() => { handleIncrement(index) }}>+</button>
                 </div>
-                <div className="total-price">{`Total: RM ${totalPrice}`}</div>
+                <div className="total-price">{`Total: RM ${totalPrice.toFixed(2)}`}</div>
             </div>
         </div>
     );

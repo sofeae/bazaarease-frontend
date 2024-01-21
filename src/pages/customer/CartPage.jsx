@@ -29,7 +29,7 @@ const CartPage = () => {
                     <ProductsSummary />
                     <div className="flex justify-between p-2 mt-6">
                         {/* Display the totalAmount above the Next button */}
-                        <div>Total Amount: RM {totalAmount}</div>
+                        <div>Total Amount: RM {totalAmount.toFixed(2)}</div>
                         <button
                             className="bg-yellow-500 text-white items-center justify-center py-2 px-4 rounded"
                             onClick={() => handleTabSwitch('Payment')}
