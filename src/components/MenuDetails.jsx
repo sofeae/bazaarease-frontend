@@ -131,7 +131,7 @@ const MenuDetails = ({ menu }) => {
       </p>
       <p className="mb-4">
         <strong>Price: </strong>
-        RM {menu.price}
+        RM {menu.price.toFixed(2)}
       </p>
       <p className="text-sm text-right">
         Added {formatDistanceToNow(new Date(menu.createdAt), { addSuffix: true })}

@@ -168,7 +168,7 @@ const OrderDetails = ({ orders, handleToggle }) => {
         </span>
       </div>
       <p>
-        <strong>Total Quantity: </strong>
+        <strong>Total Products: </strong>
         {orders.cart.length}
       </p>
       <p>
