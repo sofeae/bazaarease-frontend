@@ -131,7 +131,7 @@ const Menu = () => {
         <div className="flex flex-col w-2/5 gap-4">
           <div className="flex items-center justify-between">
             <div className="ml-4 mt-8 font-bold">
-              Is your store opening today?
+              Is your stall opening right now?
             </div>
             <Switch
               className="mt-8"

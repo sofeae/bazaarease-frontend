@@ -40,7 +40,7 @@ const Order = () => {
     }
 
     // Set up interval to fetch orders every 3 seconds
-    const intervalId = setInterval(fetchOrders, 3000);
+    const intervalId = setInterval(fetchOrders, 5000);
     setRefreshInterval(intervalId);
 
     // Clean up interval when the component is unmounted
@@ -52,10 +52,16 @@ const Order = () => {
   return (
     <div className="flex items-center justify-center md:w-11/12">
       <div className="bg-white text-black border-gray-400 ml-2 mr-2 mt-6 mb-10 border p-4 md:w-11/12 rounded-lg shadow-md sm:p-6 lg:p-8 overflow-auto">
-        <OrderTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
-        <Typography variant="p" className="ml-16 mt-4 mb-2 text-gray-600 text-xs">
-        *Click on order number to see more details
-      </Typography>
+        <div className="flex justify-between items-center"> {/* Container for tabs and typography */}
+          <div>
+            <OrderTabs list={tabs} onTabSwitch={handleTabSwitch} activeTab={currentTab} />
+          </div>
+          <div className="mt-5">
+            <Typography variant="p" className="mt-4 mb-2 text-gray-600 text-xs">
+              *Click on the order number to see more details
+            </Typography>
+          </div>
+        </div>
         <div className={`tabs ${currentTab !== 'Current Order' ? 'hidden' : ''}`}>
           <CurrentOrder currentOrder={orders} />
         </div>

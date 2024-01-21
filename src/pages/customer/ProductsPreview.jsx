@@ -11,11 +11,10 @@ export default function ProductsPreview() {
   const { userId } = useParams();
   const [menus, setMenus] = useState([]);
   const dispatch = useDispatch(); //Edit Cart
-  const cart = useSelector(cartProducts)
+  const cart = useSelector(cartProducts);
 
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },
@@ -33,45 +32,50 @@ export default function ProductsPreview() {
     },
   };
 
-  async function loadData() {
+  const loadData = async () => {
     try {
       const response = await fetch(backendBaseURL + `/api/customer/${userId}`);
       const json = await response.json();
-      
+
       // Filter products with availability: true
       const availableMenus = json.filter(product => product.availability === true);
-      
+
       setMenus(availableMenus);
       console.log(availableMenus);
     } catch (error) {
       console.error("Error while loading data:", error.message);
     }
-  }
-
-  useEffect(() => {
-    loadData();
-  }, [])
+  };
 
   const onAddProduct = (product) => {
     dispatch(addToCart(product));
-    console.log("Add Product To Card:",product)
+    console.log("Add Product To Cart:", product);
   };
+
+  useEffect(() => {
+    // Load data initially
+    loadData();
+
+    // Set up interval for auto-refresh every 5 seconds
+    const intervalId = setInterval(loadData, 5000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="container mx-auto pb-4 w-2/3 text-black bg-white">
       <Carousel responsive={responsive}>
         {menus.length > 0 &&
-          menus.map((product, index) => {
-            return (
-              <div key={index} className="w-full px-2 h-full">
-                <ProductPreviewCard
-                  key={index}
-                  product={product}
-                  onAddProduct={onAddProduct}
-                />
-              </div>
-            ); 
-          })}
+          menus.map((product, index) => (
+            <div key={index} className="w-full px-2 h-full">
+              <ProductPreviewCard
+                key={index}
+                product={product}
+                onAddProduct={onAddProduct}
+              />
+            </div>
+          ))}
       </Carousel>
     </div>
   );
