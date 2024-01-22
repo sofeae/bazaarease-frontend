@@ -32,7 +32,7 @@ const EditForm = () => {
       // setMenu(json);
       setName(json.name);
       setDesc(json.desc);
-      setPrice(json.price);
+      setPrice(json.price.toFixed(2));
       setCurrentImage(imageURL + `/${json.image}`);
     }
 
