@@ -100,31 +100,6 @@ const Menu = () => {
     }
   }, [dispatch, user, storeStatus]);
 
-  const handleStore = async () => {
-    if (!user) {
-      return;
-    }
-
-    const newStore = !checked;
-
-    const response = await fetch(backendBaseURL + '/api/menus/' + menu._id, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify({ availability: newAvailability }),
-    });
-
-    const json = await response.json();
-
-    if (response.ok) {
-      setChecked(newAvailability);
-      dispatch({ type: 'UPDATE_MENUS', payload: json });
-    }
-  };
-
-
   return (
     <>
       <div className={style["menu-container"]}>
@@ -142,7 +117,8 @@ const Menu = () => {
             />
           </div>
           {menus &&
-            menus.map((menu) => <MenuDetails key={menu._id} menu={menu} />)}
+            // menus.map((menu) => <MenuDetails key={menu._id} menu={menu} />)}
+            menus.map((menu) => <MenuDetails menu={menu} />)}
         </div>
         <MenuForm />
       </div>

@@ -110,13 +110,13 @@ const Navbar = () => {
                   transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                  <MenuItem onClick={handleEdit}>
+                  {/* <MenuItem onClick={handleEdit}>
                     <Avatar /> Profile
-                  </MenuItem>
+                  </MenuItem> */}
                   {/* <MenuItem onClick={handleClose}>
                     <Avatar /> My account
                   </MenuItem> */}
-                  <Divider />
+                  {/* <Divider /> */}
                   <MenuItem onClick={handleClick}>
                     <ListItemIcon>
                       <Logout fontSize="small" />

@@ -103,7 +103,7 @@ const MenuForm = () => {
           onChange={onImageChange}
           className={`mb-2 p-2 w-full ${emptyFields.includes("image") ? "error" : ""}`}
         />
-        <p className="text-sm text-gray-500">(Image must be in .png or .jpg format)</p>
+        {/* <p className="text-sm text-gray-500">(Image must be in .png or .jpg format)</p> */}
         <button className="bg-yellow-500 text-white px-4 py-2 rounded mt-6">Add Product</button>
         {error && <div className="error mt-2">{error}</div>}
       </form>
