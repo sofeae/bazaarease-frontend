@@ -38,10 +38,9 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    handleClickOpen();
     try {
       const userData = await signup(email, password, businessName);
-
       // Open the success dialog only if userData is truthy
       if (userData) {
         handleClickOpen();
@@ -73,7 +72,7 @@ const Signup = () => {
         className="mb-2 p-2 w-full"
         autoComplete="new-password"
       />
-      <p className="text-xs text-gray-400 mb-2">Strong password should contain (A-Z), (a-z), (0-9), and any one of (!@#$%^&*)</p>
+      {/* <p className="text-xs text-gray-400 mb-2">Strong password should contain (A-Z), (a-z), (0-9), and any one of (!@#$%^&*)</p> */}
 
       <label className="mb-2">Business Name:</label>
       <input
@@ -100,7 +99,7 @@ const Signup = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Sign Up Successful!"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Have an account?"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Click below to log in
